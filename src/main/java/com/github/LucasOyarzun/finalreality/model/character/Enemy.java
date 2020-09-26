@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
+import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -47,5 +48,10 @@ public class Enemy extends AbstractCharacter {
   @Override
   public int hashCode() {
     return Objects.hash(getWeight());
+  }
+
+  @Override
+  public void attack(AbstractCharacter attacked, int amount, AttackEffects effect) {
+
   }
 }

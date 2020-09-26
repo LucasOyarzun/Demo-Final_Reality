@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
+import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 
 /**
@@ -33,6 +34,17 @@ public interface ICharacter {
    */
   AbstractWeapon getEquippedWeapon();
 
+  int getLife();
+
+  int getDefense();
+
+  void attack(AbstractCharacter attacked, int amount, AttackEffects effect);
+
+  void loseLife(int amount);
+
+  void beHealed(int amount);
+
+  void die();
   /**
    * Returns this character's class.
    */

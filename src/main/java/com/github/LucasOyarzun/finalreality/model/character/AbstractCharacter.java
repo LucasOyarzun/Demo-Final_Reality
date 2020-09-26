@@ -1,5 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
+import com.github.LucasOyarzun.finalreality.model.character.attacks.Attack;
+import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
@@ -21,6 +23,10 @@ public abstract class AbstractCharacter implements ICharacter {
   protected final String name;
   private final CharacterClass characterClass;
   protected AbstractWeapon equippedWeapon = null;
+  private int maxLifePoints;
+  protected int lifePoints;
+  protected int defensePoints;
+  private Status status;
   private ScheduledExecutorService scheduledExecutor;
 
   protected AbstractCharacter(@NotNull String name,
@@ -29,6 +35,7 @@ public abstract class AbstractCharacter implements ICharacter {
     this.turnsQueue = turnsQueue;
     this.name = name;
     this.characterClass = characterClass;
+    this.status = Status.NULL;
   }
 
   @Override
@@ -58,10 +65,45 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
+  public int getLife() {
+    return lifePoints;
+  }
+
+  @Override
+  public int getDefense() {
+    return defensePoints;
+  }
+
+  public void attack(AbstractCharacter attacked, int amount, Attack attack) {
+      AttackEffects effect = attack.getEffect();
+      int blocked = attacked.getDefense();
+      int damage = amount - blocked;
+      attacked.loseLife(damage);                 /**READJUST*/
+  }
+
+  @Override
+  public void loseLife(int amount){
+    this.lifePoints = this.lifePoints - amount;
+    if (this.lifePoints <= 0) {
+      this.die();
+    }
+  }
+
+  @Override
+  public void beHealed(int amount) {
+    this.lifePoints = this.lifePoints + amount;
+  }
+
+  @Override
   public void equip(AbstractWeapon weapon) {
     if (this instanceof AbstractPlayerCharacter) {
       this.equippedWeapon = weapon;
     }
+  }
+
+  @Override
+  public void die() {
+    this.status = Status.DEAD;
   }
 
   @Override

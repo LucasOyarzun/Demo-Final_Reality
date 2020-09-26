@@ -10,12 +10,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 
+/**
+ *A class that holds the information and modules of the knights
+ */
+
 public class Knight extends AbstractPlayerCharacter {
 
     public Knight(@NotNull String name,
                      @NotNull BlockingQueue<ICharacter> turnsQueue) {
         super(name, turnsQueue, CharacterClass.KNIGHT);
     }
+
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Sword || weapon instanceof Axe) {

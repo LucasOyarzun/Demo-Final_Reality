@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 
+/**
+ *A class that holds the information and modules of the engineers
+ */
 public class Engineer extends AbstractPlayerCharacter {
 
     public Engineer(@NotNull String name,

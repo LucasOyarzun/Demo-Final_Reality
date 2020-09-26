@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 
+/**
+ *A class that holds the information and modules of the White mages.
+ */
+
 public class WhiteMage extends AbstractMage {
     public WhiteMage(@NotNull String name,
                      @NotNull BlockingQueue<ICharacter> turnsQueue) {

@@ -11,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 
+/**
+ *A class that holds the information and modules of the thiefs
+ */
+
 public class Thief extends AbstractPlayerCharacter {
 
     public Thief(@NotNull String name,

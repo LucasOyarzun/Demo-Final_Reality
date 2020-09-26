@@ -4,6 +4,8 @@ import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,8 +26,6 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
    * @param characterClass
    *     the class of this character
    */
-  private int lifePoints;
-  private int defensePoints;
 
   public AbstractPlayerCharacter(@NotNull String name,
                                  @NotNull BlockingQueue<ICharacter> turnsQueue,
@@ -49,5 +49,10 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
     final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
     return getCharacterClass() == that.getCharacterClass()
         && getName().equals(that.getName());
+  }
+
+  @Override
+  public void attack(AbstractCharacter attacked, int amount, AttackEffects effect) {
+
   }
 }
