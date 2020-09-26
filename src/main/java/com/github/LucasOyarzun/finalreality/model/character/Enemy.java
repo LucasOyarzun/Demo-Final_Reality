@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A class that holds all the information of a single enemy of the game.
  *
- * @author Ignacio Slater Muñoz
- * @author Lucas Oyarzun Mendez
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
 public class Enemy extends AbstractCharacter {
 
@@ -21,7 +21,7 @@ public class Enemy extends AbstractCharacter {
    */
   public Enemy(@NotNull final String name, final int weight,
       @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+    super(name, turnsQueue, CharacterClass.ENEMY);
     this.weight = weight;
   }
 

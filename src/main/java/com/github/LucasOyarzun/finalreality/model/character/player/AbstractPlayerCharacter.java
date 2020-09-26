@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Lucas Oyarzun Mendez
  */
-public class PlayerCharacter extends AbstractCharacter {
+public class AbstractPlayerCharacter extends AbstractCharacter {
 
   /**
    * Creates a new character.
@@ -24,10 +24,13 @@ public class PlayerCharacter extends AbstractCharacter {
    * @param characterClass
    *     the class of this character
    */
-  public PlayerCharacter(@NotNull String name,
-      @NotNull BlockingQueue<ICharacter> turnsQueue,
-      final CharacterClass characterClass) {
-    super(turnsQueue, name, characterClass);
+  private int lifePoints;
+  private int defensePoints;
+
+  public AbstractPlayerCharacter(@NotNull String name,
+                                 @NotNull BlockingQueue<ICharacter> turnsQueue,
+                                 final CharacterClass characterClass) {
+    super(name, turnsQueue, characterClass);
   }
 
   @Override
@@ -40,10 +43,10 @@ public class PlayerCharacter extends AbstractCharacter {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof PlayerCharacter)) {
+    if (!(o instanceof AbstractPlayerCharacter)) {
       return false;
     }
-    final PlayerCharacter that = (PlayerCharacter) o;
+    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
     return getCharacterClass() == that.getCharacterClass()
         && getName().equals(that.getName());
   }

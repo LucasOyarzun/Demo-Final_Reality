@@ -1,8 +1,8 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
-import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
-import com.github.LucasOyarzun.finalreality.model.weapon.Weapon;
+import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,11 +20,12 @@ public abstract class AbstractCharacter implements ICharacter {
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
   private final CharacterClass characterClass;
-  private Weapon equippedWeapon = null;
+  protected AbstractWeapon equippedWeapon = null;
   private ScheduledExecutorService scheduledExecutor;
 
-  protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-      @NotNull String name, CharacterClass characterClass) {
+  protected AbstractCharacter(@NotNull String name,
+      @NotNull BlockingQueue<ICharacter> turnsQueue,
+      CharacterClass characterClass) {
     this.turnsQueue = turnsQueue;
     this.name = name;
     this.characterClass = characterClass;
@@ -33,7 +34,7 @@ public abstract class AbstractCharacter implements ICharacter {
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-    if (this instanceof PlayerCharacter) {
+    if (this instanceof AbstractPlayerCharacter) {
       scheduledExecutor
           .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
     } else {
@@ -57,14 +58,14 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
-  public void equip(Weapon weapon) {
-    if (this instanceof PlayerCharacter) {
+  public void equip(AbstractWeapon weapon) {
+    if (this instanceof AbstractPlayerCharacter) {
       this.equippedWeapon = weapon;
     }
   }
 
   @Override
-  public Weapon getEquippedWeapon() {
+  public AbstractWeapon getEquippedWeapon() {
     return equippedWeapon;
   }
 

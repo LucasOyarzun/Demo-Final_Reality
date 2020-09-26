@@ -1,14 +1,14 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
-import com.github.LucasOyarzun.finalreality.model.weapon.Weapon;
+import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez
+ * @author Lucas Oyarzun Mendez.
  */
 public interface ICharacter {
 
@@ -26,12 +26,12 @@ public interface ICharacter {
   /**
    * Equips a weapon to the character.
    */
-  void equip(Weapon weapon);
+  void equip(AbstractWeapon weapon);
 
   /**
    * Return this character's equipped weapon.
    */
-  Weapon getEquippedWeapon();
+  AbstractWeapon getEquippedWeapon();
 
   /**
    * Returns this character's class.

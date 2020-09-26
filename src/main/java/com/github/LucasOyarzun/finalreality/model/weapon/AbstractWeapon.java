@@ -6,9 +6,9 @@ import java.util.Objects;
  * A class that holds all the information of a weapon.
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez
+ * @author Lucas Oyarzun Mendez.
  */
-public class Weapon {
+public class AbstractWeapon {
 
   private final String name;
   private final int damage;
@@ -19,8 +19,8 @@ public class Weapon {
    * Creates a weapon with a name, a base damage, speed and it's type.
    * @see WeaponType
    */
-  public Weapon(final String name, final int damage, final int weight,
-      final WeaponType type) {
+  public AbstractWeapon(final String name, final int damage, final int weight,
+                        final WeaponType type) {
     this.name = name;
     this.damage = damage;
     this.weight = weight;
@@ -48,10 +48,10 @@ public class Weapon {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Weapon)) {
+    if (!(o instanceof AbstractWeapon)) {
       return false;
     }
-    final Weapon weapon = (Weapon) o;
+    final AbstractWeapon weapon = (AbstractWeapon) o;
     return getDamage() == weapon.getDamage() &&
         getWeight() == weapon.getWeight() &&
         getName().equals(weapon.getName()) &&
