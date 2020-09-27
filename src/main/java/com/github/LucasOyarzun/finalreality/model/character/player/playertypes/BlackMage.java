@@ -1,7 +1,9 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.playertypes;
 
+import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.attacks.spells.AbstractSpell;
+import com.github.LucasOyarzun.finalreality.model.character.attacks.spells.SpellsTypes;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.posibleweapons.Knife;
@@ -24,6 +26,15 @@ public class BlackMage extends AbstractMage {
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Knife || weapon instanceof Staff) {
             this.equippedWeapon = weapon;
+        }
+    }
+
+    @Override
+    public void castSpell(AbstractSpell spell, AbstractCharacter objective) {
+        if (spell.getType() == SpellsTypes.BLACK_SPELL) {
+            spell.setDamage(this.getMagicDamage());
+            spell.doEffect(objective);
+            this.loseMana(spell.getCost());
         }
     }
 }

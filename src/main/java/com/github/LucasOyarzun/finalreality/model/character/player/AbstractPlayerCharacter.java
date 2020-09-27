@@ -5,7 +5,7 @@ import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
-import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
+import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,6 +33,7 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
     super(name, turnsQueue, characterClass);
   }
 
+
   @Override
   public int hashCode() {
     return Objects.hash(getCharacterClass());
@@ -51,8 +52,7 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
         && getName().equals(that.getName());
   }
 
-  @Override
-  public void attack(AbstractCharacter attacked, int amount, AttackEffects effect) {
-
+  public void attack(AbstractCharacter objective) {
+    super.attack(objective, this.getEquippedWeapon().getDamage());
   }
 }

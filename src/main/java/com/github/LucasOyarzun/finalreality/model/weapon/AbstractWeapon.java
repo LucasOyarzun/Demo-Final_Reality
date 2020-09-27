@@ -14,6 +14,7 @@ public class AbstractWeapon {
   private final int damage;
   private final int weight;
   private final WeaponType type;
+  private final int magicDamage;
 
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
@@ -25,13 +26,14 @@ public class AbstractWeapon {
     this.damage = damage;
     this.weight = weight;
     this.type = type;
+    magicDamage = 0;
   }
 
-  private String getName() {
+  public String getName() {
     return name;
   }
 
-  private int getDamage() {
+  public int getDamage() {
     return damage;
   }
 
@@ -39,8 +41,12 @@ public class AbstractWeapon {
     return weight;
   }
 
-  private WeaponType getType() {
+  public WeaponType getType() {
     return type;
+  }
+
+  public int getMagicDamage() {
+    return this.magicDamage;
   }
 
   @Override
