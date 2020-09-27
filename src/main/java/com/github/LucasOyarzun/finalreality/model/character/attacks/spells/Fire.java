@@ -1,21 +1,16 @@
 package com.github.LucasOyarzun.finalreality.model.character.attacks.spells;
 
 import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
-import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
+import com.github.LucasOyarzun.finalreality.model.character.Status;
 
-/**
- *A class that holds the information of the Fire spell.
- */
-
-public class Fire extends AbstractBlackSpell {
+public class Fire extends AbstractWhiteSpell {
 
     public Fire() {
-        super( "Fire", 15);
-        this.type = SpellsTypes.BLACK_SPELL;
+        super( "Heal", 15);
+        this.effect = Status.BURNED;
     }
-
-    public void causeEffect(AbstractCharacter attacked, AttackEffects effect) {
-        this.effect = effect;
+    public void doEffect(AbstractCharacter objective) {
+        objective.loseLife(this.magicDamage);
+        objective.beAffected(this.effect, magicDamage); // 20% de probabilidad
     }
-
 }

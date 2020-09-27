@@ -1,10 +1,11 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
-import com.github.LucasOyarzun.finalreality.model.character.attacks.Attack;
-import com.github.LucasOyarzun.finalreality.model.character.attacks.AttackEffects;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,11 +24,14 @@ public abstract class AbstractCharacter implements ICharacter {
   protected final String name;
   private final CharacterClass characterClass;
   protected AbstractWeapon equippedWeapon = null;
-  private int maxLifePoints;
+  protected int maxLifePoints;
   protected int lifePoints;
   protected int defensePoints;
   private Status status;
+  private int statusValue;
+  protected int weight;
   private ScheduledExecutorService scheduledExecutor;
+  protected List<AbstractWeapon> inventario;
 
   protected AbstractCharacter(@NotNull String name,
       @NotNull BlockingQueue<ICharacter> turnsQueue,
@@ -35,7 +39,10 @@ public abstract class AbstractCharacter implements ICharacter {
     this.turnsQueue = turnsQueue;
     this.name = name;
     this.characterClass = characterClass;
-    this.status = Status.NULL;
+    this.status = Status.NORMAL;
+    this.weight = this.equippedWeapon.getWeight();
+    this.statusValue = 0;
+    inventario = new ArrayList<AbstractWeapon>();
   }
 
   @Override
@@ -50,7 +57,6 @@ public abstract class AbstractCharacter implements ICharacter {
           .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
     }
   }
-
   /**
    * Adds this character to the turns queue.
    */
@@ -65,6 +71,15 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
+  public Status getStatus() {
+    return this.status;
+  }
+
+  @Override
+  public int getMaxLife() {
+    return this.maxLifePoints;
+  }
+  @Override
   public int getLife() {
     return lifePoints;
   }
@@ -74,11 +89,17 @@ public abstract class AbstractCharacter implements ICharacter {
     return defensePoints;
   }
 
-  public void attack(AbstractCharacter attacked, int amount, Attack attack) {
-      AttackEffects effect = attack.getEffect();
-      int blocked = attacked.getDefense();
+  @Override
+  public CharacterClass getCharacterClass() {
+    return characterClass;
+  }
+
+  @Override
+  public void attack(AbstractCharacter objective, int amount) {
+      //amount en Enemy y PlayerCharacter
+      int blocked = objective.getDefense();
       int damage = amount - blocked;
-      attacked.loseLife(damage);                 /**READJUST*/
+      objective.loseLife(damage);
   }
 
   @Override
@@ -94,11 +115,9 @@ public abstract class AbstractCharacter implements ICharacter {
     this.lifePoints = this.lifePoints + amount;
   }
 
-  @Override
-  public void equip(AbstractWeapon weapon) {
-    if (this instanceof AbstractPlayerCharacter) {
-      this.equippedWeapon = weapon;
-    }
+  public void beAffected(Status status, int magicDamage) {
+    this.status = status;
+    this.statusValue = magicDamage;
   }
 
   @Override
@@ -106,13 +125,22 @@ public abstract class AbstractCharacter implements ICharacter {
     this.status = Status.DEAD;
   }
 
+  public void addEquip(AbstractWeapon weapon) {
+    if (this instanceof AbstractPlayerCharacter) {
+      inventario.add(weapon);
+    }
+  }
+  @Override
+  public void equip(AbstractWeapon weapon) {
+    if ((this instanceof AbstractPlayerCharacter) &&
+            (this.inventario.contains(weapon))) {
+      this.equippedWeapon = weapon;
+    }
+  }
+
   @Override
   public AbstractWeapon getEquippedWeapon() {
     return equippedWeapon;
   }
 
-  @Override
-  public CharacterClass getCharacterClass() {
-    return characterClass;
-  }
 }
