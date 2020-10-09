@@ -1,11 +1,8 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
-import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,41 +19,34 @@ public abstract class AbstractCharacter implements ICharacter {
 
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
-  private final CharacterClass characterClass;
-  protected AbstractWeapon equippedWeapon = null;
-  protected int maxLifePoints;
+  protected int defense;
   protected int lifePoints;
-  protected int defensePoints;
-  private Status status;
-  private int statusValue;
-  protected int weight;
+  private final CharacterClass characterClass;
+  protected AbstractWeapon equippedAbstractWeapon = null;
   private ScheduledExecutorService scheduledExecutor;
-  protected List<AbstractWeapon> inventario;
 
-  protected AbstractCharacter(@NotNull String name,
-      @NotNull BlockingQueue<ICharacter> turnsQueue,
-      CharacterClass characterClass) {
+  protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
+      @NotNull String name, CharacterClass characterClass, int lifeP, int def) {
     this.turnsQueue = turnsQueue;
     this.name = name;
+    this.lifePoints = lifePoints;
+    this.defense = defense;
     this.characterClass = characterClass;
-    this.status = Status.NORMAL;
-    this.weight = this.equippedWeapon.getWeight();
-    this.statusValue = 0;
-    inventario = new ArrayList<AbstractWeapon>();
   }
 
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-    if (this instanceof AbstractPlayerCharacter) {
+    if (this instanceof PlayerCharacter) {
       scheduledExecutor
-          .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+          .schedule(this::addToQueue, equippedAbstractWeapon.getWeight() / 10, TimeUnit.SECONDS);
     } else {
       var enemy = (Enemy) this;
       scheduledExecutor
           .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
     }
   }
+
   /**
    * Adds this character to the turns queue.
    */
@@ -70,77 +60,9 @@ public abstract class AbstractCharacter implements ICharacter {
     return name;
   }
 
-  @Override
-  public Status getStatus() {
-    return this.status;
-  }
-
-  @Override
-  public int getMaxLife() {
-    return this.maxLifePoints;
-  }
-  @Override
-  public int getLife() {
-    return lifePoints;
-  }
-
-  @Override
-  public int getDefense() {
-    return defensePoints;
-  }
 
   @Override
   public CharacterClass getCharacterClass() {
     return characterClass;
   }
-
-  @Override
-  public void attack(AbstractCharacter objective, int amount) {
-      //amount en Enemy y PlayerCharacter
-      int blocked = objective.getDefense();
-      int damage = amount - blocked;
-      objective.loseLife(damage);
-  }
-
-  @Override
-  public void loseLife(int amount){
-    this.lifePoints = this.lifePoints - amount;
-    if (this.lifePoints <= 0) {
-      this.die();
-    }
-  }
-
-  @Override
-  public void beHealed(int amount) {
-    this.lifePoints = this.lifePoints + amount;
-  }
-
-  public void beAffected(Status status, int magicDamage) {
-    this.status = status;
-    this.statusValue = magicDamage;
-  }
-
-  @Override
-  public void die() {
-    this.status = Status.DEAD;
-  }
-
-  public void addEquip(AbstractWeapon weapon) {
-    if (this instanceof AbstractPlayerCharacter) {
-      inventario.add(weapon);
-    }
-  }
-  @Override
-  public void equip(AbstractWeapon weapon) {
-    if ((this instanceof AbstractPlayerCharacter) &&
-            (this.inventario.contains(weapon))) {
-      this.equippedWeapon = weapon;
-    }
-  }
-
-  @Override
-  public AbstractWeapon getEquippedWeapon() {
-    return equippedWeapon;
-  }
-
 }

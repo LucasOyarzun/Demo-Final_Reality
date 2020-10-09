@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez
+ * @author <Your name>
  */
-public class AbstractPlayerCharacter extends AbstractCharacter {
+public class PlayerCharacter extends AbstractCharacter {
 
   /**
    * Creates a new character.
@@ -26,13 +26,20 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
    * @param characterClass
    *     the class of this character
    */
-
-  public AbstractPlayerCharacter(@NotNull String name,
-                                 @NotNull BlockingQueue<ICharacter> turnsQueue,
-                                 final CharacterClass characterClass) {
-    super(name, turnsQueue, characterClass);
+  public PlayerCharacter(@NotNull String name,
+      @NotNull BlockingQueue<ICharacter> turnsQueue,
+      final CharacterClass characterClass,
+      int lifeP, int def) {
+    super(turnsQueue, name, characterClass, lifeP, def);
   }
 
+  public void equip(AbstractWeapon abstractWeapon) {
+      this.equippedAbstractWeapon = abstractWeapon;
+  }
+
+  public AbstractWeapon getEquippedWeapon() {
+    return equippedAbstractWeapon;
+  }
 
   @Override
   public int hashCode() {
@@ -44,15 +51,11 @@ public class AbstractPlayerCharacter extends AbstractCharacter {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof AbstractPlayerCharacter)) {
+    if (!(o instanceof PlayerCharacter)) {
       return false;
     }
-    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
+    final PlayerCharacter that = (PlayerCharacter) o;
     return getCharacterClass() == that.getCharacterClass()
         && getName().equals(that.getName());
-  }
-
-  public void attack(AbstractCharacter objective) {
-    super.attack(objective, this.getEquippedWeapon().getDamage());
   }
 }
