@@ -20,8 +20,8 @@ public class Enemy extends AbstractCharacter {
    * play.
    */
   public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue, int lifeP,int def) {
-    super(turnsQueue, name, CharacterClass.ENEMY, lifeP, def);
+      @NotNull final BlockingQueue<ICharacter> turnsQueue) {
+    super(turnsQueue, name, CharacterClass.ENEMY);
     this.weight = weight;
   }
 
@@ -43,8 +43,6 @@ public class Enemy extends AbstractCharacter {
     final Enemy enemy = (Enemy) o;
     return getWeight() == enemy.getWeight();
   }
-
-
 
   @Override
   public int hashCode() {

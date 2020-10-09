@@ -4,8 +4,6 @@ import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
-
-import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -28,17 +26,8 @@ public class PlayerCharacter extends AbstractCharacter {
    */
   public PlayerCharacter(@NotNull String name,
       @NotNull BlockingQueue<ICharacter> turnsQueue,
-      final CharacterClass characterClass,
-      int lifeP, int def) {
-    super(turnsQueue, name, characterClass, lifeP, def);
-  }
-
-  public void equip(AbstractWeapon abstractWeapon) {
-      this.equippedAbstractWeapon = abstractWeapon;
-  }
-
-  public AbstractWeapon getEquippedWeapon() {
-    return equippedAbstractWeapon;
+      final CharacterClass characterClass) {
+    super(turnsQueue, name, characterClass);
   }
 
   @Override
