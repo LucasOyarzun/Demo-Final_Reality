@@ -7,9 +7,9 @@ public class Axe extends AbstractWeapon {
     /**
      * Creates an axe with a name, a base damage and weight.
      *
-     * @param name
-     * @param damage
-     * @param weight
+     * @param name        the axe's name
+     * @param damage      the axe's damage
+     * @param weight      the axe's weight
      * @see WeaponType
      */
     public Axe(String name, int damage, int weight) {

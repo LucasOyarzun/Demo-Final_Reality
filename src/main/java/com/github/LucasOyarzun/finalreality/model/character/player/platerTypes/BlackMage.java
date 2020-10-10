@@ -15,8 +15,11 @@ public class BlackMage extends PlayerCharacter implements IMage{
     /**
      * Creates a new Black Mage.
      *
-     * @param name           the character's name
+     * @param name           the BlackMage's name
      * @param turnsQueue     the queue with the characters waiting for their turn
+     * @param lifeP          the BlackMage's lifePoints
+     * @param def            the BlackMage's defense
+     * @param mana           the BlackMage's mana
      */
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int lifeP, int def, int mana) {
@@ -24,6 +27,7 @@ public class BlackMage extends PlayerCharacter implements IMage{
         this.mana = mana;
     }
 
+    /** Equip a weapon just in case that it's a Staff or a Knife*/
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Knife || weapon instanceof Staff) {

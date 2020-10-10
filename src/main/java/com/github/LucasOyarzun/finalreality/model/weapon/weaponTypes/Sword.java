@@ -7,9 +7,9 @@ public class Sword extends AbstractWeapon {
     /**
      * Creates a weapon with a name, a base damage and weight.
      *
-     * @param name
-     * @param damage
-     * @param weight
+     * @param name        the sword's name
+     * @param damage      the sword's damage
+     * @param weight      the sword's weight
      * @see WeaponType
      */
     public Sword(String name, int damage, int weight) {

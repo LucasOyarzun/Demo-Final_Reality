@@ -18,9 +18,14 @@ public class Enemy extends AbstractCharacter {
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
+   * @param name           the character's name
+   * @param turnsQueue     the queue with the characters waiting for their turn
+   * @param lifeP          the character's lifePoints
+   * @param def            the character's defense
+   * @param weight         the character's weight
    */
-  public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue, int lifeP,int def) {
+  public Enemy(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
+               int lifeP,int def, final int weight) {
     super(turnsQueue, name, CharacterClass.ENEMY, lifeP, def);
     this.weight = weight;
   }
@@ -32,6 +37,7 @@ public class Enemy extends AbstractCharacter {
     return weight;
   }
 
+  /**Compares an object and return if it's equals to this enemy*/
   @Override
   public boolean equals(final Object o) {
     if (this == o) {

@@ -29,8 +29,8 @@ public abstract class AbstractCharacter implements ICharacter {
       @NotNull String name, CharacterClass characterClass, int lifeP, int def) {
     this.turnsQueue = turnsQueue;
     this.name = name;
-    this.lifePoints = lifePoints;
-    this.defense = defense;
+    this.lifePoints = lifeP;
+    this.defense = def;
     this.characterClass = characterClass;
   }
 
@@ -60,6 +60,15 @@ public abstract class AbstractCharacter implements ICharacter {
     return name;
   }
 
+  @Override
+  public int getDefense() {
+    return defense;
+  }
+
+  @Override
+  public int getLifePoints() {
+    return lifePoints;
+  }
 
   @Override
   public CharacterClass getCharacterClass() {

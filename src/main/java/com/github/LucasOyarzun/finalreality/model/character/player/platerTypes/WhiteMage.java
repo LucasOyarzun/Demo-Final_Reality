@@ -13,10 +13,13 @@ import java.util.concurrent.BlockingQueue;
 public class WhiteMage extends PlayerCharacter implements IMage {
     private int mana;
     /**
-     * Creates a new White Mage.
+     * Creates a new Black Mage.
      *
-     * @param name           the character's name
+     * @param name           the WhiteMage's name
      * @param turnsQueue     the queue with the characters waiting for their turn
+     * @param lifeP          the WhiteMage's lifePoints
+     * @param def            the WhiteMage's defense
+     * @param mana           the WhiteMage's mana
      */
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int lifeP, int def, int mana) {
@@ -24,6 +27,7 @@ public class WhiteMage extends PlayerCharacter implements IMage {
         this.mana = mana;
     }
 
+    /** Equip a weapon just in case that it's a Staff*/
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Staff) {

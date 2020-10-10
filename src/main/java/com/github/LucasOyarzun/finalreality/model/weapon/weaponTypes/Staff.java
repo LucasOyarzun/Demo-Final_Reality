@@ -7,10 +7,10 @@ public class Staff extends AbstractWeapon {
     /**
      * Creates a weapon with a name, a base damage, weight and magicDamage.
      *
-     * @param name
-     * @param damage
-     * @param weight
-     * @param magicDam
+     * @param name        the staff's name
+     * @param damage      the staff's damage
+     * @param weight      the staff's weight
+     * @param magicDam    the staff's magicDamage
      * @see WeaponType
      */
     int magicDamage;

@@ -25,6 +25,10 @@ public class PlayerCharacter extends AbstractCharacter {
    *     the queue with the characters waiting for their turn
    * @param characterClass
    *     the class of this character
+   * @param lifeP
+   *     the lifePoints of this character
+   * @param def
+   *     the defense of this character
    */
   public PlayerCharacter(@NotNull String name,
       @NotNull BlockingQueue<ICharacter> turnsQueue,
@@ -33,19 +37,31 @@ public class PlayerCharacter extends AbstractCharacter {
     super(turnsQueue, name, characterClass, lifeP, def);
   }
 
+  /**
+   *
+   * Equip a Weapon to the character
+   * @param abstractWeapon
+   *      the weapon that we will equip to the character
+   */
   public void equip(AbstractWeapon abstractWeapon) {
       this.equippedAbstractWeapon = abstractWeapon;
   }
 
+  /**
+   *
+   * @return character's equipped weapon
+   *
+   */
   public AbstractWeapon getEquippedWeapon() {
     return equippedAbstractWeapon;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getCharacterClass());
+    return Objects.hash(getName(), getLifePoints(), getDefense(),getCharacterClass());
   }
 
+  /**Compares an object and return if it's equals to this character*/
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -55,7 +71,6 @@ public class PlayerCharacter extends AbstractCharacter {
       return false;
     }
     final PlayerCharacter that = (PlayerCharacter) o;
-    return getCharacterClass() == that.getCharacterClass()
-        && getName().equals(that.getName());
+    return this.hashCode() == o.hashCode();
   }
 }
