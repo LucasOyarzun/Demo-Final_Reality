@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * <Complete here with the details of the implemented application>
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez.
+ * @author <Your name>
  */
 public class FinalReality extends Application {
 
