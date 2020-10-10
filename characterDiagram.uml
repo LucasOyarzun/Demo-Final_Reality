@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.github.LucasOyarzun.finalreality.model.character</OriginalElement>
+  <nodes>
+    <node x="-803.9999999999999" y="401.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.BlackMage</node>
+    <node x="99.25000000000011" y="260.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass</node>
+    <node x="-131.9999999999999" y="401.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Engineer</node>
+    <node x="-729.4799999999999" y="266.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.IMage</node>
+    <node x="-355.9999999999999" y="401.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Knight</node>
+    <node x="-102.49999999999989" y="232.33333333333331">com.github.LucasOyarzun.finalreality.model.character.Enemy</node>
+    <node x="-385.4999999999999" y="221.33333333333331">com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter</node>
+    <node x="-250.7499999999999" y="51.33333333333334">com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter</node>
+    <node x="-759.1666666666665" y="18.000000000000227">com.github.LucasOyarzun.finalreality.model.character.EnemyTest</node>
+    <node x="92.00000000000011" y="401.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Thief</node>
+    <node x="-579.9999999999999" y="401.3333333333333">com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.WhiteMage</node>
+    <node x="-576.3888888888886" y="-9.222222222222015">com.github.LucasOyarzun.finalreality.model.character.PlayerCharacterTest</node>
+    <node x="-771.7777777777776" y="-118.55555555555542">com.github.LucasOyarzun.finalreality.model.character.AbstractCharacterTest</node>
+    <node x="-250.7499999999999" y="-96.66666666666666">com.github.LucasOyarzun.finalreality.model.character.ICharacter</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Engineer" target="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter">
+      <point x="0.0" y="-27.0" />
+      <point x="-29.999999999999886" y="381.3333333333333" />
+      <point x="-201.39999999999986" y="381.3333333333333" />
+      <point x="52.60000000000002" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.WhiteMage" target="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter">
+      <point x="51.0" y="-27.0" />
+      <point x="-426.9999999999999" y="381.3333333333333" />
+      <point x="-306.5999999999999" y="381.3333333333333" />
+      <point x="-52.60000000000002" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Thief" target="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter">
+      <point x="0.0" y="-27.0" />
+      <point x="194.0000000000001" y="371.3333333333333" />
+      <point x="-148.79999999999984" y="371.3333333333333" />
+      <point x="105.20000000000005" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter" target="com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter">
+      <point x="0.0" y="-60.0" />
+      <point x="-253.9999999999999" y="196.33333333333331" />
+      <point x="-192.7499999999999" y="196.33333333333331" />
+      <point x="-58.0" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.BlackMage" target="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.IMage">
+      <point x="-51.0" y="-27.0" />
+      <point x="-752.9999999999999" y="381.3333333333333" />
+      <point x="-707.4799999999999" y="381.3333333333333" />
+      <point x="-22.0" y="15.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.WhiteMage" target="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.IMage">
+      <point x="-51.0" y="-27.0" />
+      <point x="-528.9999999999999" y="361.3333333333333" />
+      <point x="-663.4799999999999" y="361.3333333333333" />
+      <point x="22.0" y="15.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.Enemy" target="com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter">
+      <point x="0.0" y="-49.0" />
+      <point x="-15.499999999999886" y="196.33333333333331" />
+      <point x="-76.74999999999989" y="196.33333333333331" />
+      <point x="58.0" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Knight" target="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.EnemyTest" target="com.github.LucasOyarzun.finalreality.model.character.AbstractCharacterTest">
+      <point x="0.0" y="-49.0" />
+      <point x="-673.3333333333333" y="16.888888888889028" />
+      <point x="-672.111111111111" y="15.777777777777928" />
+      <point x="-103.0" y="38.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.BlackMage" target="com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter">
+      <point x="51.0" y="-27.0" />
+      <point x="-650.9999999999999" y="371.3333333333333" />
+      <point x="-359.1999999999999" y="371.3333333333333" />
+      <point x="-105.19999999999999" y="60.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.PlayerCharacterTest" target="com.github.LucasOyarzun.finalreality.model.character.AbstractCharacterTest">
+      <point x="0.0" y="-104.0" />
+      <point x="-460.4444444444442" y="-17.555555555555372" />
+      <point x="-459.44444444444423" y="-27.555555555555372" />
+      <point x="103.0" y="38.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter" target="com.github.LucasOyarzun.finalreality.model.character.ICharacter">
+      <point x="0.0" y="-60.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="-252.33333333333337" y="169.88888888888886" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

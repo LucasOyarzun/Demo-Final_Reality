@@ -13,16 +13,20 @@ import java.util.concurrent.BlockingQueue;
 
 public class Knight extends PlayerCharacter {
     /**
-     * Creates a new character.
+     * Creates a new Engineer.
      *
-     * @param name           the character's name
+     * @param name           the knight's name
      * @param turnsQueue     the queue with the characters waiting for their turn
+     * @param lifeP          the knight's lifePoints
+     * @param def            the knight's defense
+     *
      */
     public Knight(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                   int lifeP, int def) {
         super(name, turnsQueue, CharacterClass.KNIGHT, lifeP, def);
     }
 
+    /** Equip a weapon just in case that it's an Axe, a Knife or a Sword*/
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Knife || weapon instanceof Sword || weapon instanceof Axe) {

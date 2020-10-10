@@ -13,16 +13,20 @@ import java.util.concurrent.BlockingQueue;
 
 public class Thief extends PlayerCharacter {
     /**
-     * Creates a new Thief.
+     * Creates a new Engineer.
      *
-     * @param name           the character's name
+     * @param name           the Thief's name
      * @param turnsQueue     the queue with the characters waiting for their turn
+     * @param lifeP          the Thief's lifePoints
+     * @param def            the Thief's defense
+     *
      */
     public Thief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                 int lifeP, int def) {
         super(name, turnsQueue, CharacterClass.THIEF, lifeP, def);
     }
 
+    /** Equip a weapon just in case that it's a Staff, a Sword or a Bow*/
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Sword || weapon instanceof Staff || weapon instanceof Bow) {

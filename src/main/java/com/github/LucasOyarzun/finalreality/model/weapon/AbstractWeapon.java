@@ -18,6 +18,10 @@ public class AbstractWeapon implements IWeapon {
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
    * @see WeaponType
+   * @param name        the weapon's name
+   * @param damage      the weapon's damage
+   * @param weight      the weapon's weight
+   * @param type        the weapon's type
    */
   public AbstractWeapon (final String name, final int damage, final int weight,
                         final WeaponType type) {
@@ -26,23 +30,27 @@ public class AbstractWeapon implements IWeapon {
     this.weight = weight;
     this.type = type;
   }
-
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public int getDamage() {
     return damage;
   }
 
+  @Override
   public int getWeight() {
     return weight;
   }
 
+  @Override
   public WeaponType getType() {
     return type;
   }
 
+  /**Compares an object and return if it's equals to this weapon*/
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -52,10 +60,7 @@ public class AbstractWeapon implements IWeapon {
       return false;
     }
     final AbstractWeapon abstractWeapon = (AbstractWeapon) o;
-    return getDamage() == abstractWeapon.getDamage() &&
-        getWeight() == abstractWeapon.getWeight() &&
-        getName().equals(abstractWeapon.getName()) &&
-        getType() == abstractWeapon.getType();
+    return this.hashCode() == o.hashCode();
   }
 
   @Override

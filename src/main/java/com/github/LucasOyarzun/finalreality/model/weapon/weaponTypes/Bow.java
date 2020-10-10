@@ -7,9 +7,9 @@ public class Bow extends AbstractWeapon {
     /**
      * Creates a weapon with a name, a base damage and weight.
      *
-     * @param name
-     * @param damage
-     * @param weight
+     * @param name        the bow's name
+     * @param damage      the bow's damage
+     * @param weight      the bow's weight
      * @see WeaponType
      */
     public Bow(String name, int damage, int weight) {

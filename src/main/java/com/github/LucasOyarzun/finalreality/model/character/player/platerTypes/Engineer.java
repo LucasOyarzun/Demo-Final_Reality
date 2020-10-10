@@ -14,14 +14,18 @@ public class Engineer extends PlayerCharacter {
     /**
      * Creates a new Engineer.
      *
-     * @param name           the character's name
+     * @param name           the engineer's name
      * @param turnsQueue     the queue with the characters waiting for their turn
+     * @param lifeP          the engineer's lifePoints
+     * @param def            the engineer's defense
+     *
      */
     public Engineer(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                     int lifeP, int def) {
         super(name, turnsQueue, CharacterClass.ENGINEER, lifeP, def);
     }
 
+    /** Equip a weapon just in case that it's an Axe or a Bow*/
     @Override
     public void equip(AbstractWeapon weapon) {
         if (weapon instanceof Axe || weapon instanceof Bow) {
