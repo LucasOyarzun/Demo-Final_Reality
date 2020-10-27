@@ -20,6 +20,9 @@ class EnemyTest extends AbstractCharacterTest {
     testEnemies.add(new Enemy(ENEMY_NAME, turns, 100, 10, 10, 10));
   }
 
+  /**
+   * Checks that the class' constructor and equals method works properly.
+   */
   @Test
   void constructorTest() {
     checkConstruction(new Enemy(ENEMY_NAME, turns, 100, 10, 10, 10),
@@ -28,6 +31,9 @@ class EnemyTest extends AbstractCharacterTest {
         new PlayerCharacter(ENEMY_NAME, turns, CharacterClass.THIEF, 100, 10));
   }
 
+  /**
+   * Test the waitTurn method
+   */
   @Test
   void waitTurnTest() {
     Assertions.assertTrue(turns.isEmpty());

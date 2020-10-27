@@ -35,16 +35,23 @@ public class Enemy extends AbstractCharacter {
   }
 
   /**
-   * Returns the weight of this enemy.
+   * Returns the enemy's weight.
    */
   public int getWeight() {
     return weight;
   }
 
+  /**
+   * Return the enemy's damage
+   */
   public int getDamage() {
     return attack;
   }
 
+  /**
+   * A method to attack a PlayerCharacter
+   * @param player the player that the enemy will attack
+   */
   public void attack(PlayerCharacter player) {
     if (player.isAlive()) {
       player.loseLife(this.getDamage() - player.getDefense());

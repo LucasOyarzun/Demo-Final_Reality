@@ -24,7 +24,6 @@ public class Engineer extends PlayerCharacter {
                     int lifeP, int def) {
         super(name, turnsQueue, CharacterClass.ENGINEER, lifeP, def);
     }
-    /** Equip a weapon just in case that it's an Axe or a Bow*/
 
     @Override
     public void equipAxe(Axe axe) {

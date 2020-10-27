@@ -40,6 +40,9 @@ public class PlayerCharacter extends AbstractCharacter {
     super(turnsQueue, name, characterClass, lifeP, def);
   }
 
+  /**
+   * Return the player's damage
+   */
   public int getDamage() {
     return equippedAbstractWeapon.getDamage();
   }
@@ -71,20 +74,53 @@ public class PlayerCharacter extends AbstractCharacter {
     return this.hashCode() == that.hashCode();
   }
 
+  /**
+   * A method to equip a weapon
+   * @param weapon
+   */
   public void equip(AbstractWeapon weapon) {
     weapon.beEquipedBy(this);
   }
 
+  /**
+   * A method to equip an Axe
+   * @param axe
+   */
   public void equipAxe(Axe axe) {
   }
+
+  /**
+   * A method to equip a Bow
+   * @param bow
+   */
   public void equipBow(Bow bow) {
   }
+
+  /**
+   * A method to equip a Knife
+   * @param knife
+   */
   public void equipKnife(Knife knife) {
   }
+
+  /**
+   * A method to equip a Staff
+   * @param staff
+   */
   public void equipStaff(Staff staff) {
   }
+
+  /**
+   * A method to equip a Sword
+   * @param sword
+   */
   public void equipSword(Sword sword) {
   }
+
+  /**
+   *
+   * @param enemy the enemy that the player will attack
+   */
   public void attack(Enemy enemy) {
     if (enemy.isAlive()) {
       enemy.loseLife(this.getDamage() - enemy.getDefense());
