@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.WeaponType;
 
@@ -15,4 +16,9 @@ public class Axe extends AbstractWeapon {
     public Axe(String name, int damage, int weight) {
         super(name, damage, weight, WeaponType.AXE);
     }
+
+    public void beEquipedBy(PlayerCharacter character) {
+        character.equipAxe(this);
+    }
+
 }

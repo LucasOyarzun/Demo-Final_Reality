@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.WeaponType;
 
@@ -17,5 +18,8 @@ public class Staff extends AbstractWeapon {
     public Staff(String name, int damage, int weight, int magicDam) {
         super(name, damage, weight, WeaponType.STAFF);
         this.magicDamage = magicDam;
+    }
+    public void beEquipedBy(PlayerCharacter character) {
+        character.equipStaff(this);
     }
 }

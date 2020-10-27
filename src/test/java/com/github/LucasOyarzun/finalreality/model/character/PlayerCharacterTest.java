@@ -1,9 +1,5 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 
@@ -14,11 +10,12 @@ import java.util.Map;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.*;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
-import com.github.LucasOyarzun.finalreality.model.weapon.WeaponType;
 import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Set of tests for the {@code GameCharacter} class.
@@ -104,7 +101,7 @@ class PlayerCharacterTest extends AbstractCharacterTest {
    */
   @Test
   void constructorTest() {
-    var enemy = new Enemy("Enemy", turns, 100, 10, 10);
+    var enemy = new Enemy("Enemy", turns, 100, 10, 10, 10);
     for (var character :
         testCharacters) {
       var characterClass = character.getCharacterClass();
@@ -166,6 +163,11 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testAxe, engi.getEquippedWeapon());
     engi.equip(testBow);
     assertEquals(testBow, engi.getEquippedWeapon());
+
+    testStaff.beEquipedBy(engi);
+    assertEquals(testBow, engi.getEquippedWeapon());
+    testAxe.beEquipedBy(engi);
+    assertEquals(testAxe, engi.getEquippedWeapon());
   }
 
   @Test
@@ -180,6 +182,61 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testBow, ladron.getEquippedWeapon());
     ladron.equip(testSword);
     assertEquals(testSword, ladron.getEquippedWeapon());
+    testStaff.beEquipedBy(ladron);
+    assertEquals(testStaff, ladron.getEquippedWeapon());
   }
 
+  @Test
+  void attackTest() {
+    var thief = new Thief("Jose", turns, 5, 2);
+    var thief2 = new Thief("Jose", turns, 5, 2);
+    var enemy1 =new Enemy("Demon", turns, 100, 15, 10, 10);
+    var enemy2 = new Enemy("Wolf", turns, 100, 10, 3, 10 );
+
+    assertTrue(enemy1.isAlive());
+    enemy1.attack(thief);
+    assertEquals(0, thief.getLifePoints());
+    assertFalse(thief.isAlive());
+
+    enemy2.attack(thief2);
+    assertEquals(4, thief2.getLifePoints());
+    enemy2.attack(thief2);
+    assertEquals(3, thief2.getLifePoints());
+    assertTrue(thief2.isAlive());
+    enemy1.attack(thief2);
+    assertEquals(0, thief2.getLifePoints());
+    assertFalse(thief2.isAlive());
+
+    /**Attack when its already dead*/
+    enemy1.attack(thief2);
+    assertEquals(0, thief2.getLifePoints());
+    assertFalse(thief2.isAlive());
+
+    var sword= new Sword("Sword", 15, 20);
+    var knight = new Knight("Levi", turns, 100, 20);
+    knight.equip(sword);
+
+
+    knight.attack(enemy2);
+    assertEquals(95, enemy2.getLifePoints());
+    assertTrue(enemy2.isAlive());
+
+    var enemy3 = new Enemy("Bear", turns, 10, 6, 3, 10 );
+    assertTrue(enemy3.isAlive());
+
+    knight.attack(enemy3);
+    assertEquals(1, enemy3.getLifePoints());
+    assertTrue(enemy3.isAlive());
+
+    knight.attack(enemy3);
+    assertEquals(0, enemy3.getLifePoints());
+    assertFalse(enemy3.isAlive());
+
+    /**Attack when its already dead*/
+
+    knight.attack(enemy3);
+    assertEquals(0, enemy3.getLifePoints());
+    assertFalse(enemy3.isAlive());
+
+  }
 }

@@ -27,11 +27,14 @@ public class BlackMage extends PlayerCharacter implements IMage{
         this.mana = mana;
     }
 
-    /** Equip a weapon just in case that it's a Staff or a Knife*/
+
     @Override
-    public void equip(AbstractWeapon weapon) {
-        if (weapon instanceof Knife || weapon instanceof Staff) {
-            super.equip(weapon);
-        }
+    public void equipStaff(Staff staff) {
+        this.equippedAbstractWeapon = staff;
+    }
+
+    @Override
+    public void equipKnife(Knife knife) {
+        this.equippedAbstractWeapon = knife;
     }
 }

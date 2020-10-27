@@ -1,11 +1,14 @@
 package com.github.LucasOyarzun.finalreality.model.character.player;
 
 import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
+import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
+import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -37,14 +40,8 @@ public class PlayerCharacter extends AbstractCharacter {
     super(turnsQueue, name, characterClass, lifeP, def);
   }
 
-  /**
-   *
-   * Equip a Weapon to the character
-   * @param abstractWeapon
-   *      the weapon that we will equip to the character
-   */
-  public void equip(AbstractWeapon abstractWeapon) {
-      this.equippedAbstractWeapon = abstractWeapon;
+  public int getDamage() {
+    return equippedAbstractWeapon.getDamage();
   }
 
   /**
@@ -71,6 +68,26 @@ public class PlayerCharacter extends AbstractCharacter {
       return false;
     }
     final PlayerCharacter that = (PlayerCharacter) o;
-    return this.hashCode() == o.hashCode();
+    return this.hashCode() == that.hashCode();
+  }
+
+  public void equip(AbstractWeapon weapon) {
+    weapon.beEquipedBy(this);
+  }
+
+  public void equipAxe(Axe axe) {
+  }
+  public void equipBow(Bow bow) {
+  }
+  public void equipKnife(Knife knife) {
+  }
+  public void equipStaff(Staff staff) {
+  }
+  public void equipSword(Sword sword) {
+  }
+  public void attack(Enemy enemy) {
+    if (enemy.isAlive()) {
+      enemy.loseLife(this.getDamage() - enemy.getDefense());
+    }
   }
 }

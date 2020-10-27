@@ -24,14 +24,15 @@ public class Engineer extends PlayerCharacter {
                     int lifeP, int def) {
         super(name, turnsQueue, CharacterClass.ENGINEER, lifeP, def);
     }
-
     /** Equip a weapon just in case that it's an Axe or a Bow*/
+
     @Override
-    public void equip(AbstractWeapon weapon) {
-        if (weapon instanceof Axe || weapon instanceof Bow) {
-            super.equip(weapon);
-        }
+    public void equipAxe(Axe axe) {
+        this.equippedAbstractWeapon = axe;
     }
 
-
+    @Override
+    public void equipBow(Bow bow) {
+        this.equippedAbstractWeapon = bow;
+    }
 }

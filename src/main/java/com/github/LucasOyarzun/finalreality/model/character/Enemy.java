@@ -3,6 +3,8 @@ package com.github.LucasOyarzun.finalreality.model.character;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class Enemy extends AbstractCharacter {
 
   private final int weight;
+  private final int attack;
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
@@ -25,9 +28,10 @@ public class Enemy extends AbstractCharacter {
    * @param weight         the character's weight
    */
   public Enemy(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
-               int lifeP,int def, final int weight) {
+               int lifeP,int def, int attack, final int weight) {
     super(turnsQueue, name, CharacterClass.ENEMY, lifeP, def);
     this.weight = weight;
+    this.attack = attack;
   }
 
   /**
@@ -37,6 +41,15 @@ public class Enemy extends AbstractCharacter {
     return weight;
   }
 
+  public int getDamage() {
+    return attack;
+  }
+
+  public void attack(PlayerCharacter player) {
+    if (player.isAlive()) {
+      player.loseLife(this.getDamage() - player.getDefense());
+    }
+  }
   /**Compares an object and return if it's equals to this enemy*/
   @Override
   public boolean equals(final Object o) {
@@ -49,8 +62,6 @@ public class Enemy extends AbstractCharacter {
     final Enemy enemy = (Enemy) o;
     return getWeight() == enemy.getWeight();
   }
-
-
 
   @Override
   public int hashCode() {

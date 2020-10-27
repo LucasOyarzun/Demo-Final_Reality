@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

@@ -4,9 +4,7 @@ import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
-import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.Bow;
-import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.Staff;
-import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.Sword;
+import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
@@ -26,11 +24,18 @@ public class Thief extends PlayerCharacter {
         super(name, turnsQueue, CharacterClass.THIEF, lifeP, def);
     }
 
-    /** Equip a weapon just in case that it's a Staff, a Sword or a Bow*/
-    @Override
-    public void equip(AbstractWeapon weapon) {
-        if (weapon instanceof Sword || weapon instanceof Staff || weapon instanceof Bow) {
-            super.equip(weapon);
-        }
+
+    public void equipStaff(Staff staff) {
+        this.equippedAbstractWeapon = staff;
+    }
+
+
+    public void equipSword(Sword sword) {
+        this.equippedAbstractWeapon = sword;
+    }
+
+
+    public void equipBow(Bow bow) {
+        this.equippedAbstractWeapon = bow;
     }
 }
