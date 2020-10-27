@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.WeaponType;
 
@@ -14,5 +15,9 @@ public class Knife extends AbstractWeapon {
      */
     public Knife(String name, int damage, int weight) {
         super(name, damage, weight, WeaponType.KNIFE);
+    }
+
+    public void beEquipedBy(PlayerCharacter character) {
+        character.equipKnife(this);
     }
 }

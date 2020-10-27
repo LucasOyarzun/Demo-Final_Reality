@@ -26,11 +26,18 @@ public class Knight extends PlayerCharacter {
         super(name, turnsQueue, CharacterClass.KNIGHT, lifeP, def);
     }
 
-    /** Equip a weapon just in case that it's an Axe, a Knife or a Sword*/
     @Override
-    public void equip(AbstractWeapon weapon) {
-        if (weapon instanceof Knife || weapon instanceof Sword || weapon instanceof Axe) {
-            super.equip(weapon);
-        }
+    public void equipKnife(Knife knife) {
+        this.equippedAbstractWeapon = knife;
+    }
+
+    @Override
+    public void equipSword(Sword sword) {
+        this.equippedAbstractWeapon = sword;
+    }
+
+    @Override
+    public void equipAxe(Axe axe) {
+        this.equippedAbstractWeapon = axe;
     }
 }

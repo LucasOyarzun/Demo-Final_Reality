@@ -1,5 +1,8 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.BlackMage;
+
 import java.util.Objects;
 
 /**
@@ -61,6 +64,9 @@ public class AbstractWeapon implements IWeapon {
     }
     final AbstractWeapon abstractWeapon = (AbstractWeapon) o;
     return this.hashCode() == o.hashCode();
+  }
+  @Override
+  public void beEquipedBy(PlayerCharacter player){
   }
 
   @Override

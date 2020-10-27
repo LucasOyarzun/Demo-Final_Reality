@@ -38,5 +38,7 @@ public interface ICharacter {
    */
   int getLifePoints();
 
+  void loseLife(int cantidad);
 
+  boolean isAlive();
 }

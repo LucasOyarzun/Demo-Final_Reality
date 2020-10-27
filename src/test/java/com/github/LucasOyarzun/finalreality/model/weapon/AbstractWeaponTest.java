@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.Thief;
 import com.github.LucasOyarzun.finalreality.model.weapon.weaponTypes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class AbstractWeaponTest {
 
     var expectedAxe = new AbstractWeapon(AXE_NAME, DAMAGE, SPEED, WeaponType.AXE);
     var expectedStaff = new AbstractWeapon(STAFF_NAME, DAMAGE, SPEED, WeaponType.STAFF);
-    var expectedSword  = new AbstractWeapon(SWORD_NAME, DAMAGE, SPEED, WeaponType.SWORD);
+    var expectedSword = new AbstractWeapon(SWORD_NAME, DAMAGE, SPEED, WeaponType.SWORD);
     var expectedBow = new AbstractWeapon(BOW_NAME, DAMAGE, SPEED, WeaponType.BOW);
     var expectedKnife = new AbstractWeapon(KNIFE_NAME, DAMAGE, SPEED, WeaponType.KNIFE);
     assertEquals(expectedAxe, testAxe);
@@ -50,6 +51,7 @@ class AbstractWeaponTest {
     assertEquals(expectedKnife, testKnife);
     assertEquals(expectedKnife.hashCode(), testKnife.hashCode());
   }
+
   @Test
   void equalsTest() {
     var expectedAxe = new AbstractWeapon(AXE_NAME, DAMAGE, SPEED, WeaponType.AXE);

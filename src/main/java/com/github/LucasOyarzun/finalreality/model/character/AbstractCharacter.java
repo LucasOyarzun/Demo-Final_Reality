@@ -65,6 +65,7 @@ public abstract class AbstractCharacter implements ICharacter {
     return defense;
   }
 
+
   @Override
   public int getLifePoints() {
     return lifePoints;
@@ -73,5 +74,19 @@ public abstract class AbstractCharacter implements ICharacter {
   @Override
   public CharacterClass getCharacterClass() {
     return characterClass;
+  }
+
+  @Override
+  public void loseLife(int value) {
+    if ((this.lifePoints - value > 0)) {
+      this.lifePoints -= value;
+    } else {
+      this.lifePoints = 0;
+    }
+  }
+
+  @Override
+  public boolean isAlive() {
+    return this.lifePoints > 0;
   }
 }

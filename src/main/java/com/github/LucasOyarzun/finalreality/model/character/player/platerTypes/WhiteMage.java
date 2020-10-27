@@ -27,11 +27,9 @@ public class WhiteMage extends PlayerCharacter implements IMage {
         this.mana = mana;
     }
 
-    /** Equip a weapon just in case that it's a Staff*/
     @Override
-    public void equip(AbstractWeapon weapon) {
-        if (weapon instanceof Staff) {
-            super.equip(weapon);
-        }
+    public void equipStaff(Staff staff) {
+        this.equippedAbstractWeapon = staff;
     }
+
 }
