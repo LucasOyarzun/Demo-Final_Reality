@@ -31,5 +31,9 @@ public interface IWeapon {
      */
     WeaponType getType();
 
+    /**
+     * Equip this weapon to the player selected
+     * @param player
+     */
     void beEquipedBy(PlayerCharacter player);
 }

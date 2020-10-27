@@ -32,6 +32,9 @@ class AbstractWeaponTest {
     testKnife = new Knife(KNIFE_NAME, DAMAGE, SPEED);
   }
 
+  /**
+   * Checks that the class' constructor works properly.
+   */
   @Test
   void constructorTest() {
 
@@ -52,6 +55,9 @@ class AbstractWeaponTest {
     assertEquals(expectedKnife.hashCode(), testKnife.hashCode());
   }
 
+  /**
+   * Checks that the class' equals method works properly.
+   */
   @Test
   void equalsTest() {
     var expectedAxe = new AbstractWeapon(AXE_NAME, DAMAGE, SPEED, WeaponType.AXE);

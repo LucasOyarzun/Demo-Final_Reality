@@ -19,6 +19,11 @@ public class Staff extends AbstractWeapon {
         super(name, damage, weight, WeaponType.STAFF);
         this.magicDamage = magicDam;
     }
+
+    /**
+     * Equip this Staff to a character
+     * @param character
+     */
     public void beEquipedBy(PlayerCharacter character) {
         character.equipStaff(this);
     }

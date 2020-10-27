@@ -17,6 +17,10 @@ public class Axe extends AbstractWeapon {
         super(name, damage, weight, WeaponType.AXE);
     }
 
+    /**
+     * Equip this Axe to a character
+     * @param character
+     */
     public void beEquipedBy(PlayerCharacter character) {
         character.equipAxe(this);
     }

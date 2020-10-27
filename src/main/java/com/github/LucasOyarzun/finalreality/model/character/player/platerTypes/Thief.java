@@ -24,17 +24,17 @@ public class Thief extends PlayerCharacter {
         super(name, turnsQueue, CharacterClass.THIEF, lifeP, def);
     }
 
-
+    @Override
     public void equipStaff(Staff staff) {
         this.equippedAbstractWeapon = staff;
     }
 
-
+    @Override
     public void equipSword(Sword sword) {
         this.equippedAbstractWeapon = sword;
     }
 
-
+    @Override
     public void equipBow(Bow bow) {
         this.equippedAbstractWeapon = bow;
     }

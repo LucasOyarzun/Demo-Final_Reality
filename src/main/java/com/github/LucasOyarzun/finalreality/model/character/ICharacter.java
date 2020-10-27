@@ -38,7 +38,13 @@ public interface ICharacter {
    */
   int getLifePoints();
 
+  /**
+   * Decrease this character's life Points by a int value.
+   */
   void loseLife(int cantidad);
 
+  /**
+   * Return true is this character's Life Points are over 0, else, return false
+   */
   boolean isAlive();
 }

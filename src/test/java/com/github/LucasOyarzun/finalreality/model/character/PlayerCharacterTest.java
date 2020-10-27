@@ -51,7 +51,8 @@ class PlayerCharacterTest extends AbstractCharacterTest {
 
   /**
    * Setup method.
-   * Creates a new character named Vivi with 10 speed and links it to a turn queue.
+   * Creates 5 new characters and links them to a turn queue.
+   * Creates 6 new weapons
    */
   @BeforeEach
   void setUp() {
@@ -78,6 +79,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     testCharacters.add(new Thief(THIEF_NAME, turns, 100, 10));
     }
 
+  /**
+   * Test the waitTurn method
+   */
   @Test
   void waitTurnTest() {
     Assertions.assertTrue(turns.isEmpty());
@@ -117,6 +121,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
 
   }
 
+  /**
+   * Test the method equip whit Black Mage
+   */
   @Test
   void equipWeaponBlackMageTest() {
     var Bmage = testCharacters.get(0);
@@ -129,6 +136,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testKnife, Bmage.getEquippedWeapon());
   }
 
+  /**
+   * Test the method equip whit Knight
+   */
   @Test
   void equipWeaponKnightTest() {
     var kina = testCharacters.get(1);
@@ -143,6 +153,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testKnife, kina.getEquippedWeapon());
   }
 
+  /**
+   * Test the method equip whit White Mage
+   */
   @Test
   void equipWeaponWhiteMageTest() {
     var Wmage = testCharacters.get(2);
@@ -153,6 +166,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testStaff, Wmage.getEquippedWeapon());
   }
 
+  /**
+   * Test the method equip whit Engineer
+   */
   @Test
   void equipWeaponEngineerTest() {
     var engi = testCharacters.get(3);
@@ -170,6 +186,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testAxe, engi.getEquippedWeapon());
   }
 
+  /**
+   * Test the method equip whit Thief
+   */
   @Test
   void equipWeaponThiefTest() {
     var ladron = testCharacters.get(4);
@@ -186,6 +205,9 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     assertEquals(testStaff, ladron.getEquippedWeapon());
   }
 
+  /**
+   * Test the attack and equip methods in PlayerCharacter and Enemy
+   */
   @Test
   void attackTest() {
     var thief = new Thief("Jose", turns, 5, 2);

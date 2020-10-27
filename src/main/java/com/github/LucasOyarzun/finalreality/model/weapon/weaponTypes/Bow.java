@@ -17,6 +17,10 @@ public class Bow extends AbstractWeapon {
         super(name, damage, weight, WeaponType.BOW);
     }
 
+    /**
+     * Equip this Bow to a character
+     * @param character
+     */
     public void beEquipedBy(PlayerCharacter character) {
         character.equipBow(this);
     }

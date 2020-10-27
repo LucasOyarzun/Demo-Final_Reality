@@ -17,6 +17,10 @@ public class Sword extends AbstractWeapon {
         super(name, damage, weight, WeaponType.SWORD);
     }
 
+    /**
+     * Equip this Sword to a character
+     * @param character
+     */
     public void beEquipedBy(PlayerCharacter character) {
         character.equipSword(this);
     }
