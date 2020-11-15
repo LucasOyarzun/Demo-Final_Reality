@@ -9,18 +9,18 @@ package com.github.LucasOyarzun.finalreality.model.weapon;
  */
 public interface IWeapon {
 
-  /**
-   * Returns this weapon's name.
-   */
-  String getName();
+    /**
+     * Returns this weapon's name.
+     */
+    String getName();
 
-  /**
-   * Returns this weapon's damage.
-   */
-  int getDamage();
+    /**
+     * Returns this weapon's damage.
+     */
+    int getDamage();
 
-  /**
-   * Returns this weapon's weight.
-   */
-  int getWeight();
+    /**
+     * Returns this weapon's weight.
+     */
+    int getWeight();
 }

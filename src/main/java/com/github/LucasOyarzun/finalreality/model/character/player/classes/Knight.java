@@ -12,26 +12,26 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Knight extends AbstractPlayerCharacter {
 
-  /**
-   * Creates a new character.
-   *
-   * @param name               the character's name
-   * @param lifePoints         the knight's lifePoints
-   * @param defense            the knight's defense
-   * @param turnsQueue         the queue with the characters waiting for their turn
-   */
-  public Knight(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
-                int lifePoints, int defense) {
-    super(name, lifePoints, defense, turnsQueue);
-  }
+    /**
+     * Creates a new character.
+     *
+     * @param name               the character's name
+     * @param lifePoints         the knight's lifePoints
+     * @param defense            the knight's defense
+     * @param turnsQueue         the queue with the characters waiting for their turn
+     */
+    public Knight(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
+                  int lifePoints, int defense) {
+        super(name, lifePoints, defense, turnsQueue);
+    }
 
-  @Override
-  public boolean equals(final Object o) {
-    return o instanceof Knight && super.equals(o);
-  }
+    @Override
+    public boolean equals(final Object o) {
+        return o instanceof Knight && super.equals(o);
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), Knight.class);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), Knight.class);
+    }
 }

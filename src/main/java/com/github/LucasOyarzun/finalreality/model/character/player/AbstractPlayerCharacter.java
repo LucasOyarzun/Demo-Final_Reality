@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz.
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements
-    IPlayerCharacter {
+        IPlayerCharacter {
 
   protected IWeapon equippedWeapon = null;
 
@@ -32,7 +32,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    *     the queue with the characters waiting for their turn
    */
   public AbstractPlayerCharacter(@NotNull String name, final int lifePoints, final int defense,
-      @NotNull BlockingQueue<ICharacter> turnsQueue) {
+                                 @NotNull BlockingQueue<ICharacter> turnsQueue) {
     super(name, lifePoints, defense, turnsQueue);
   }
 
@@ -40,13 +40,13 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor
-        .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+            .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   @Override
   public int hashCode() {
     return Objects
-        .hash(super.hashCode(), AbstractPlayerCharacter.class, getEquippedWeapon());
+            .hash(super.hashCode(), AbstractPlayerCharacter.class, getEquippedWeapon());
   }
 
   @Override
@@ -85,3 +85,4 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     return equippedWeapon.getDamage();
   }
 }
+

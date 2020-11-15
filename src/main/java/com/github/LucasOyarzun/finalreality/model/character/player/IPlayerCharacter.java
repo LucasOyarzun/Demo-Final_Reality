@@ -7,14 +7,14 @@ import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
  */
 public interface IPlayerCharacter {
 
-  /**
-   * Equips a weapon to the character.
-   */
-  void equip(IWeapon weapon);
+    /**
+     * Equips a weapon to the character.
+     */
+    void equip(IWeapon weapon);
 
-  /**
-   * Return this character's equipped weapon.
-   * @return
-   */
-  IWeapon getEquippedWeapon();
+    /**
+     * Return this character's equipped weapon.
+     * @return
+     */
+    IWeapon getEquippedWeapon();
 }

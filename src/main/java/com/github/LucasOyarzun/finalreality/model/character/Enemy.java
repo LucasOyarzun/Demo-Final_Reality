@@ -15,7 +15,6 @@ public class Enemy extends AbstractCharacter {
 
   private final int weight;
   private final int attack;
-  private final int defense;
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
@@ -32,7 +31,6 @@ public class Enemy extends AbstractCharacter {
     super(name, lifePoints, defense, turnsQueue);
     this.weight = weight;
     this.attack = attack;
-    this.defense = defense;
   }
 
   @Override
@@ -73,5 +71,3 @@ public class Enemy extends AbstractCharacter {
     return attack;
   }
 }
-
-
