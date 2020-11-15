@@ -1,14 +1,10 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
-import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
-import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
-
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez
  */
 public interface ICharacter {
 
@@ -22,11 +18,6 @@ public interface ICharacter {
    * Returns this character's name.
    */
   String getName();
-
-  /**
-   * Returns this character's class.
-   */
-  CharacterClass getCharacterClass();
 
   /**
    * Return this character's defense.
@@ -47,4 +38,5 @@ public interface ICharacter {
    * Return true is this character's Life Points are over 0, else, return false
    */
   boolean isAlive();
+
 }

@@ -1,5 +1,5 @@
 module finalreality.main {
-  exports com.github.LucasOyarzun.finalreality.gui;
+  exports com.github.islaterm.finalreality.gui;
   requires javafx.controls;
   requires org.jetbrains.annotations;
 }
