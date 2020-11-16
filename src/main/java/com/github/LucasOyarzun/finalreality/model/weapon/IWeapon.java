@@ -1,7 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
-import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.BlackMage;
+import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 
 /**
  * This represents a weapon from the game.
@@ -11,6 +11,7 @@ import com.github.LucasOyarzun.finalreality.model.character.player.platerTypes.B
  * @author Lucas Oyarzun Mendez
  */
 public interface IWeapon {
+
     /**
      * Returns this weapon's name.
      */
@@ -27,13 +28,8 @@ public interface IWeapon {
     int getWeight();
 
     /**
-     * Returns this weapon's type.
+     * Equip this weapon to a player character
+     * @param character
      */
-    WeaponType getType();
-
-    /**
-     * Equip this weapon to the player selected
-     * @param player
-     */
-    void beEquipedBy(PlayerCharacter player);
+    void beEquipedBy(IPlayerCharacter character);
 }

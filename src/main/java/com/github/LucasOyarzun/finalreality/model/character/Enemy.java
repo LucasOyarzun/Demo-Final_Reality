@@ -1,17 +1,17 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
-import com.github.LucasOyarzun.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
-import com.github.LucasOyarzun.finalreality.model.character.player.PlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single enemy of the game.
  *
  * @author Ignacio Slater Muñoz
- * @author Lucas Oyarzun Mendez
  */
 public class Enemy extends AbstractCharacter {
 
@@ -21,21 +21,47 @@ public class Enemy extends AbstractCharacter {
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
-   * @param name           the character's name
-   * @param turnsQueue     the queue with the characters waiting for their turn
-   * @param lifeP          the character's lifePoints
-   * @param def            the character's defense
-   * @param weight         the character's weight
+   *
+   * @param name       the character's name
+   * @param lifePoints the character's lifePoints
+   * @param defense    the character's defense
+   * @param weight     the character's weight
+   * @param turnsQueue the queue with the characters waiting for their turn
    */
-  public Enemy(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
-               int lifeP,int def, int attack, final int weight) {
-    super(turnsQueue, name, CharacterClass.ENEMY, lifeP, def);
+  public Enemy(@NotNull final String name, final int lifePoints, final int defense,
+               final int weight, final int attack,
+               @NotNull final BlockingQueue<ICharacter> turnsQueue) {
+    super(name, lifePoints, defense, turnsQueue);
     this.weight = weight;
     this.attack = attack;
   }
 
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    scheduledExecutor
+            .schedule(this::addToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getWeight());
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Enemy)) {
+      return false;
+    }
+    final Enemy enemy = (Enemy) o;
+    return getWeight() == enemy.getWeight();
+  }
+
   /**
-   * Returns the enemy's weight.
+   * Returns the weight of this enemy.
    */
   public int getWeight() {
     return weight;
@@ -49,29 +75,11 @@ public class Enemy extends AbstractCharacter {
   }
 
   /**
-   * A method to attack a PlayerCharacter
-   * @param player the player that the enemy will attack
+   * @param player the plaey that the enemy will attack
    */
-  public void attack(PlayerCharacter player) {
+  void attack(IPlayerCharacter player) {
     if (player.isAlive()) {
       player.loseLife(this.getDamage() - player.getDefense());
     }
-  }
-  /**Compares an object and return if it's equals to this enemy*/
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof Enemy)) {
-      return false;
-    }
-    final Enemy enemy = (Enemy) o;
-    return getWeight() == enemy.getWeight();
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getWeight());
   }
 }
