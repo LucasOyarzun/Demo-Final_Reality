@@ -39,4 +39,5 @@ public interface ICharacter {
    */
   boolean isAlive();
 
+
 }

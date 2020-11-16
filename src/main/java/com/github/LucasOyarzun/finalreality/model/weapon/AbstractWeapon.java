@@ -1,5 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
+import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
+
 import java.util.Objects;
 
 /**
@@ -42,6 +44,11 @@ public abstract class AbstractWeapon implements IWeapon {
     return weight;
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(AbstractCharacter.class, getName(),
+                        getDamage(), getWeight());
+  }
   /**
    * Compares an object and return if it's equals to this weapon
    */
@@ -50,15 +57,7 @@ public abstract class AbstractWeapon implements IWeapon {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof AbstractWeapon)) {
-      return false;
-    }
-    final AbstractWeapon abstractWeapon = (AbstractWeapon) o;
-    return this.hashCode() == abstractWeapon.hashCode();
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getName(), getDamage(), getWeight());
+    final AbstractWeapon that = (AbstractWeapon) o;
+    return this.hashCode() == that.hashCode();
   }
 }

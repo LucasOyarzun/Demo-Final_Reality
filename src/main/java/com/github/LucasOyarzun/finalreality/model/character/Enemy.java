@@ -4,6 +4,8 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -19,14 +21,15 @@ public class Enemy extends AbstractCharacter {
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
-   * @param name           the character's name
-   * @param weight         the character's weight
-   * @param lifePoints          the character's lifePoints
-   * @param defense        the character's defense
-   * @param turnsQueue     the queue with the characters waiting for their turn
+   *
+   * @param name       the character's name
+   * @param lifePoints the character's lifePoints
+   * @param defense    the character's defense
+   * @param weight     the character's weight
+   * @param turnsQueue the queue with the characters waiting for their turn
    */
-  public Enemy(@NotNull final String name, final int weight, final int lifePoints,
-               final int defense, final int attack,
+  public Enemy(@NotNull final String name, final int lifePoints, final int defense,
+               final int weight, final int attack,
                @NotNull final BlockingQueue<ICharacter> turnsQueue) {
     super(name, lifePoints, defense, turnsQueue);
     this.weight = weight;
@@ -69,5 +72,14 @@ public class Enemy extends AbstractCharacter {
    */
   public int getDamage() {
     return attack;
+  }
+
+  /**
+   * @param player the plaey that the enemy will attack
+   */
+  void attack(IPlayerCharacter player) {
+    if (player.isAlive()) {
+      player.loseLife(this.getDamage() - player.getDefense());
+    }
   }
 }

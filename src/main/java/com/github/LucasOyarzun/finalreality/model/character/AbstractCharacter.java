@@ -37,7 +37,8 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(AbstractCharacter.class, getName());
+        return Objects.hash(AbstractCharacter.class, getName(),
+                getName(), getLifePoints(), getDefense());
     }
 
     @Override
@@ -45,11 +46,8 @@ public abstract class AbstractCharacter implements ICharacter {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractCharacter)) {
-            return false;
-        }
         final AbstractCharacter that = (AbstractCharacter) o;
-        return getName().equals(that.getName());
+        return this.hashCode() == that.hashCode();
     }
 
     @Override
@@ -69,11 +67,14 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public void loseLife(int value) {
-        if ((this.lifePoints - value > 0)) {
-            this.lifePoints -= value;
-        } else {
-            this.lifePoints = 0;
+        if (value >=0) {
+            if ((this.lifePoints - value > 0)) {
+                this.lifePoints -= value;
+            } else {
+                this.lifePoints = 0;
+            }
         }
+
     }
 
     @Override

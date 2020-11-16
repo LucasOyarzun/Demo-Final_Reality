@@ -1,12 +1,15 @@
 package com.github.LucasOyarzun.finalreality.model.character.player;
 
 import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.github.LucasOyarzun.finalreality.model.weapon.classes.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -51,23 +54,10 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
   @Override
   public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractPlayerCharacter)) {
-      return false;
-    }
-    if (!super.equals(o)) {
-      return false;
-    }
-    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
-    return Objects.equals(getEquippedWeapon(), that.getEquippedWeapon());
-  }
 
-  @Override
-  public void equip(IWeapon weapon) {
-    // Esto se tiene que cambiar para la entrega parcial 3
-    this.equippedWeapon = weapon;
+    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
+    return Objects.equals(getEquippedWeapon(), that.getEquippedWeapon())
+            && super.equals(o);
   }
 
   /**
@@ -84,5 +74,40 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   public int getDamage() {
     return equippedWeapon.getDamage();
   }
+
+  @Override
+  public void equip(IWeapon weapon) {
+    weapon.beEquipedBy(this);
+  }
+
+  @Override
+  public void equipAxe(Axe axe) {
+  }
+
+  @Override
+  public void equipBow(Bow bow) {
+  }
+
+  @Override
+  public void equipKnife(Knife knife) {
+  }
+
+  @Override
+  public void equipStaff(Staff staff) {
+  }
+
+  @Override
+  public void equipSword(Sword sword) {
+  }
+  /**
+   *
+   * @param enemy the enemy that the player will attack
+   */
+  public void attack(Enemy enemy) {
+    if (enemy.isAlive()) {
+      enemy.loseLife(this.getDamage() - enemy.getDefense());
+    }
+  }
+
 }
 

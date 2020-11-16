@@ -1,27 +1,33 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Ignacio Slater Muñoz.
  */
-public class WhiteMage extends AbstractPlayerCharacter {
-
+public class WhiteMage extends AbstractPlayerCharacter implements IPlayerCharacter {
+    private int mana;
     /**
      * Creates a new character.
      *
      * @param name               the character's name
-     * @param lifePoints         the knight's lifePoints
-     * @param defense            the knight's defense
+     * @param lifePoints         the white mage's lifePoints
+     * @param defense            the white mage's defense
+     * @param mana               the white mage's mana
      * @param turnsQueue         the queue with the characters waiting for their turn
      */
-    public WhiteMage(@NotNull final String name, @NotNull final BlockingQueue<ICharacter> turnsQueue,
-                     int lifePoints, int defense) {
+    public WhiteMage(@NotNull final String name, int lifePoints, int defense, int mana,
+                     @NotNull final BlockingQueue<ICharacter> turnsQueue) {
         super(name, lifePoints, defense, turnsQueue);
+        this.mana = mana;
     }
 
     @Override
@@ -32,5 +38,10 @@ public class WhiteMage extends AbstractPlayerCharacter {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), WhiteMage.class);
+    }
+
+    @Override
+    public void equipStaff(Staff staff) {
+        this.equippedWeapon = staff;
     }
 }
