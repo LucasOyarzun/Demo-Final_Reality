@@ -14,7 +14,13 @@ by [_Square Enix_](https://www.square-enix.com)
 Broadly speaking for the combat the player has a group of characters to control and a group of 
 enemies controlled by the computer.
 
----
+
+Assumptions
+-----------
+How we don't have implemented a Main() method yet, I haven't used Quiet Testing, because otherwise,
+wouldn't be occasion to watch the announcements of the controller.
+
+-----------
 
 This project has two principal packages: Character and Weapons, with their respective tests.
 First, the Character package has the model of Enemies and Player characters. Starting by an interface called
