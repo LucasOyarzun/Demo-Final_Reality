@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Set of tests for the {@code Thief} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 class ThiefTest extends AbstractPlayerCharacterTest {
 
     private static final String THIEF_NAME = "Zidane";
@@ -21,19 +27,31 @@ class ThiefTest extends AbstractPlayerCharacterTest {
         zidane = new Thief(THIEF_NAME,100, 10, turns);
     }
 
+    /**
+     * Test the waitTurn method in enemies.
+     */
     @Test
     void waitTurnTest() {
         zidane.equip(testSword);
         checkWaitTurn(zidane);
     }
 
+    /**
+     * Checks that the class' constructor works properly.
+     */
     @Test
     void constructorTest() {
         checkConstruction(new Thief(THIEF_NAME,100,10, turns),
                 zidane,
                 new Thief("Different name",100,10, turns),
-                new Knight(THIEF_NAME,100,10,turns),
+                new Engineer(THIEF_NAME,100,10,turns),
                 goblin);
+
+        //Not equals with another Thief with different weapon//
+        Thief withOtherWeapon = new Thief(THIEF_NAME,100,10, turns);
+        withOtherWeapon.equip(testSword);
+        zidane.equip(testBow);
+        assertNotEquals(withOtherWeapon, zidane);
     }
 
     /**
@@ -71,6 +89,11 @@ class ThiefTest extends AbstractPlayerCharacterTest {
         zidane.attack(goblin);
         assertTrue(goblin.isAlive());
         assertEquals(5, goblin.getLifePoints());
+        zidane.attack(goblin);
+        assertFalse(goblin.isAlive());
+        assertEquals(0, goblin.getLifePoints());
+
+        /*Attack to a dead enemy*/
         zidane.attack(goblin);
         assertFalse(goblin.isAlive());
         assertEquals(0, goblin.getLifePoints());

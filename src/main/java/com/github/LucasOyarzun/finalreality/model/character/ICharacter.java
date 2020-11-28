@@ -1,10 +1,15 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
+import com.github.LucasOyarzun.finalreality.controller.GameController;
+import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
+import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
 public interface ICharacter {
 
@@ -13,6 +18,11 @@ public interface ICharacter {
    * seconds before adding the character to the queue.
    */
   void waitTurn();
+
+  /**
+   * Adds this character to the turns queue.
+   */
+  void addToQueue();
 
   /**
    * Returns this character's name.
@@ -35,9 +45,42 @@ public interface ICharacter {
   void loseLife(int cantidad);
 
   /**
-   * Return true is this character's Life Points are over 0, else, return false
+   * Return true is this character's Life Points are over 0, else, return false.
    */
   boolean isAlive();
 
+  /**
+   * A method to attack another character in game.
+   * @param character character attacked.
+   */
+  void attack(ICharacter character);
+  /**
+   * A method to decide what to do when character attacks an enemy.
+   * @param enemy Computer's character.
+   */
+  void attackEnemy(Enemy enemy);
 
+  /**
+   * A method to decide what to do when character attacks an Player Character.
+   * @param character Player's character.
+   */
+  void attackPlayerCharacter(IPlayerCharacter character);
+
+  /**
+   * A method to decide what to do when this character is attacked.
+   * @param character character who attacked.
+   */
+  void beAttackedBy(ICharacter character);
+
+  /**
+   * Add a Listener to this character.
+   * @param handler listener.
+   */
+  void addListener(IEventHandler handler);
+
+  /**
+   * Attack ordered by a controller.
+   * @param controller Controller hwo ordered the attack.
+   */
+  void controllerAttack(GameController controller);
 }

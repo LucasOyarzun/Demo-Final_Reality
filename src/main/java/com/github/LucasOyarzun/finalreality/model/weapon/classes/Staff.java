@@ -23,6 +23,7 @@ public class Staff extends AbstractWeapon {
         super(name, damage, weight);
         this.magicDamage = magicDamage;
     }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof Staff && super.equals(o);

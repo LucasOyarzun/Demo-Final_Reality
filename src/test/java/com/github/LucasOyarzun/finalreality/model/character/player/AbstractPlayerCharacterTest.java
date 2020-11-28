@@ -1,18 +1,14 @@
 package com.github.LucasOyarzun.finalreality.model.character.player;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacterTest;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
-import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.*;
-
 
 /**
  * Set of tests for the {@code GameCharacter} class.
  *
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
 public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest {
   protected Axe testAxe;
@@ -33,12 +29,9 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
   private static final int DAMAGE = 15;
   private static final int SPEED = 10;
 
-  protected void checkEquippedWeapon(IPlayerCharacter character, IWeapon weapon) {
-    assertNull(character.getEquippedWeapon());
-    character.equip(weapon);
-    assertEquals(weapon, character.getEquippedWeapon());
-  }
-
+  /**
+   * Creates new weapons and Enemies.
+   */
   protected void basicSetUp() {
     super.basicSetUp();
     testAxe = new Axe(AXE_NAME, DAMAGE, SPEED);
@@ -52,4 +45,3 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     immortal = new Enemy("immortal", 100, 50, 20, 10, turns);
   }
 }
-

@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe;
 import org.junit.jupiter.api.Assertions;
 
 /**
  * Abstract class containing the common tests for all the types of characters.
- *
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  * @see ICharacter
  */
 public abstract class AbstractCharacterTest {
@@ -39,6 +38,9 @@ public abstract class AbstractCharacterTest {
     }
   }
 
+  /**
+   * Checks that the class' constructor works properly.
+   */
   protected void checkConstruction(final ICharacter expectedCharacter,
                                    final ICharacter testEqualCharacter,
                                    final ICharacter sameClassDifferentCharacter,
@@ -46,11 +48,14 @@ public abstract class AbstractCharacterTest {
                                    final ICharacter opponent) {
     assertEquals(expectedCharacter, testEqualCharacter);
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
-    assertNotEquals(testEqualCharacter, differentClassCharacter);
+    assertNotEquals(differentClassCharacter, testEqualCharacter);
     assertNotEquals(opponent, testEqualCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
   }
 
+  /**
+   * Create a LinkedBlockingQueue of turns that will be used by characters.
+   */
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
   }

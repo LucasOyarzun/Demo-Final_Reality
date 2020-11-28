@@ -8,7 +8,7 @@ import java.util.Objects;
  * A class that holds all the information of a weapon.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Lucas Oyarzun Mendez.
  */
 public abstract class AbstractWeapon implements IWeapon {
 
@@ -49,9 +49,7 @@ public abstract class AbstractWeapon implements IWeapon {
     return Objects.hash(AbstractCharacter.class, getName(),
                         getDamage(), getWeight());
   }
-  /**
-   * Compares an object and return if it's equals to this weapon
-   */
+
   @Override
   public boolean equals(final Object o) {
     if (this == o) {

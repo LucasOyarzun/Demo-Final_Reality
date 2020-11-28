@@ -4,6 +4,12 @@ import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Set of tests for the {@code Sword} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 public class SwordTest extends AbstractWeaponTest {
 
     private static final String SWORD_NAME = "Test Sword";
@@ -12,6 +18,9 @@ public class SwordTest extends AbstractWeaponTest {
 
     private Sword testSword;
 
+    /**
+     * Creates a new Sword
+     */
     @BeforeEach
     void setUp() {
         testSword = new Sword(SWORD_NAME, DAMAGE, SPEED);

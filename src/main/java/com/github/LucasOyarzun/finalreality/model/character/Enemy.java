@@ -1,10 +1,13 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
+import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import com.github.LucasOyarzun.finalreality.controller.GameController;
+import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,8 +15,11 @@ import org.jetbrains.annotations.NotNull;
  * A class that holds all the information of a single enemy of the game.
  *
  * @author Ignacio Slater Muñoz
+ * @author Lucas Oyarzun Mendez.
  */
 public class Enemy extends AbstractCharacter {
+
+  private final PropertyChangeSupport characterEndsTurn = new PropertyChangeSupport(this);
 
   private final int weight;
   private final int attack;
@@ -22,11 +28,11 @@ public class Enemy extends AbstractCharacter {
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
    *
-   * @param name       the character's name
-   * @param lifePoints the character's lifePoints
-   * @param defense    the character's defense
-   * @param weight     the character's weight
-   * @param turnsQueue the queue with the characters waiting for their turn
+   * @param name       the character's name.
+   * @param lifePoints the character's lifePoints.
+   * @param defense    the character's defense.
+   * @param weight     the character's weight.
+   * @param turnsQueue the queue with the characters waiting for their turn.
    */
   public Enemy(@NotNull final String name, final int lifePoints, final int defense,
                final int weight, final int attack,
@@ -45,7 +51,8 @@ public class Enemy extends AbstractCharacter {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getWeight());
+    return Objects.hash(getWeight(), getDamage(), getDefense(),
+            getLifePoints(), getName());
   }
 
   @Override
@@ -57,7 +64,7 @@ public class Enemy extends AbstractCharacter {
       return false;
     }
     final Enemy enemy = (Enemy) o;
-    return getWeight() == enemy.getWeight();
+    return hashCode() == enemy.hashCode();
   }
 
   /**
@@ -68,18 +75,41 @@ public class Enemy extends AbstractCharacter {
   }
 
   /**
-   * Return the enemy's damage
+   * Return the enemy's damage.
    */
   public int getDamage() {
     return attack;
   }
 
-  /**
-   * @param player the plaey that the enemy will attack
-   */
-  void attack(IPlayerCharacter player) {
-    if (player.isAlive()) {
-      player.loseLife(this.getDamage() - player.getDefense());
+
+  @Override
+  public void attackEnemy(Enemy enemy) {
+  }
+
+  @Override
+  public void attackPlayerCharacter(IPlayerCharacter character) {
+    if (character.isAlive()) {
+      int damage = this.getDamage() - character.getDefense();
+      character.loseLife(this.getDamage() - character.getDefense());
+      waitTurn();
+      characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
+              null,
+              this.getName() + " attacks "+ damage +" to " + character.getName());
     }
+  }
+
+  @Override
+  public void beAttackedBy(ICharacter character) {
+    character.attackEnemy(this);
+  }
+
+  @Override
+  public void controllerAttack(GameController controller){
+    controller.attackEnemy(this);
+  }
+
+  @Override
+  public void addListener(IEventHandler handler) {
+    characterEndsTurn.addPropertyChangeListener(handler);
   }
 }
