@@ -1,15 +1,18 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
-import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
-import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
-import com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Set of tests for the {@code Engineer} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 class EngineerTest extends AbstractPlayerCharacterTest {
 
     private static final String ENGINEER_NAME = "Cid";
@@ -24,12 +27,18 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         cid = new Engineer(ENGINEER_NAME,100, 10, turns);
     }
 
+    /**
+     * Test the waitTurn method in enemies.
+     */
     @Test
     void waitTurnTest() {
         cid.equip(testAxe);
         checkWaitTurn(cid);
     }
 
+    /**
+     * Checks that the class' constructor works properly.
+     */
     @Test
     void constructorTest() {
         checkConstruction(new Engineer(ENGINEER_NAME,100,10, turns),
@@ -37,6 +46,12 @@ class EngineerTest extends AbstractPlayerCharacterTest {
                 new Engineer("Different name",100,10, turns),
                 new Knight(ENGINEER_NAME,100,10,turns),
                 goblin);
+
+        //Not equals with another Knight with different weapon//
+        Engineer withOtherWeapon = new Engineer(ENGINEER_NAME,100,10, turns);
+        withOtherWeapon.equip(testBow);
+        cid.equip(testAxe);
+        assertNotEquals(withOtherWeapon, cid);
     }
 
     /**
@@ -77,6 +92,11 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         assertFalse(goblin.isAlive());
         assertEquals(0, goblin.getLifePoints());
 
+        /*Attack to a dead enemy*/
+        cid.attack(goblin);
+        assertFalse(goblin.isAlive());
+        assertEquals(0, goblin.getLifePoints());
+
         /*Attack whit different player's defense */
         assertTrue(demon.isAlive());
         cid.attack(demon);
@@ -89,5 +109,4 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         assertTrue(immortal.isAlive());
         assertEquals(100, immortal.getLifePoints());
     }
-
 }

@@ -1,19 +1,19 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
-import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
-
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
+import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
-public class WhiteMage extends AbstractPlayerCharacter implements IPlayerCharacter {
+
+public class WhiteMage extends AbstractPlayerCharacter {
     private int mana;
     /**
      * Creates a new character.

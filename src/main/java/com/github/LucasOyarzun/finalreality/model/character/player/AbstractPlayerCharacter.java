@@ -1,9 +1,13 @@
 package com.github.LucasOyarzun.finalreality.model.character.player;
 
+import com.github.LucasOyarzun.finalreality.controller.GameController;
+import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.AbstractCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
+
+import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -16,23 +20,22 @@ import org.jetbrains.annotations.NotNull;
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements
         IPlayerCharacter {
+
+  private final PropertyChangeSupport characterEndsTurn = new PropertyChangeSupport(this);
 
   protected IWeapon equippedWeapon = null;
 
   /**
    * Creates a new character.
    *
-   * @param name
-   *     the character's name
-   * @param lifePoints
-   *     the lifePoints of this character
-   * @param defense
-   *     the defense of this character
-   * @param turnsQueue
-   *     the queue with the characters waiting for their turn
+   * @param name       the character's name
+   * @param lifePoints the lifePoints of this character
+   * @param defense    the defense of this character
+   * @param turnsQueue the queue with the characters waiting for their turn
    */
   public AbstractPlayerCharacter(@NotNull String name, final int lifePoints, final int defense,
                                  @NotNull BlockingQueue<ICharacter> turnsQueue) {
@@ -43,7 +46,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor
-            .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+              .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   @Override
@@ -60,9 +63,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
             && super.equals(o);
   }
 
-  /**
-   * Return character's equipped weapon
-   */
   @Override
   public IWeapon getEquippedWeapon() {
     return equippedWeapon;
@@ -99,14 +99,38 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   @Override
   public void equipSword(Sword sword) {
   }
-  /**
-   *
-   * @param enemy the enemy that the player will attack
-   */
-  public void attack(Enemy enemy) {
+
+  @Override
+  public void attackEnemy(Enemy enemy) {
     if (enemy.isAlive()) {
+      int damage = this.getDamage() - enemy.getDefense();
       enemy.loseLife(this.getDamage() - enemy.getDefense());
+      waitTurn();
+      characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
+              null,
+              this.getName() + " attacks "+ damage +" to " + enemy.getName());
     }
+  }
+
+  @Override
+  public void attackPlayerCharacter(IPlayerCharacter character) {}
+
+  @Override
+  public void beAttackedBy(ICharacter character) {
+    character.attackPlayerCharacter(this);
+  }
+
+  @Override
+  public void controllerAttack(GameController controller){
+    controller.attackPlayerCharacter(this);
+  }
+
+  /**
+   * Add a Listener to this class.
+   * @param handler listener.
+   */
+  public void addListener(IEventHandler handler) {
+    characterEndsTurn.addPropertyChangeListener(handler);
   }
 
 }

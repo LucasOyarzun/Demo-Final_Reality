@@ -4,6 +4,12 @@ import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Set of tests for the {@code Knife} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 public class KnifeTest extends AbstractWeaponTest {
 
     private static final String KNIFE_NAME = "Test Knife";
@@ -12,6 +18,9 @@ public class KnifeTest extends AbstractWeaponTest {
 
     private Knife testKnife;
 
+    /**
+     * Creates a new Knife
+     */
     @BeforeEach
     void setUp() {
         testKnife = new Knife(KNIFE_NAME, DAMAGE, SPEED);

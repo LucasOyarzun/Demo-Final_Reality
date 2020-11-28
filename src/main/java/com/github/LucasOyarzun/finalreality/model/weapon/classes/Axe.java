@@ -21,6 +21,7 @@ public class Axe extends AbstractWeapon {
     public Axe(final String name, final int damage, final int weight) {
         super(name, damage, weight);
     }
+
     @Override
     public boolean equals(final Object o) {
         return o instanceof Axe && super.equals(o);

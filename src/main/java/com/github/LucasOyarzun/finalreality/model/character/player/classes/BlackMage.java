@@ -6,15 +6,15 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
-public class BlackMage extends AbstractPlayerCharacter implements IPlayerCharacter {
+public class BlackMage extends AbstractPlayerCharacter {
     private int mana;
     /**
      * Creates a new character.

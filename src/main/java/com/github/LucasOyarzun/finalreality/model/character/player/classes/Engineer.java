@@ -6,15 +6,15 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Bow;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
  */
-public class Engineer extends AbstractPlayerCharacter implements IPlayerCharacter {
+public class Engineer extends AbstractPlayerCharacter {
 
     /**
      * Creates a new character.

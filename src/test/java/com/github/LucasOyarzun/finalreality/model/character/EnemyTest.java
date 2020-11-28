@@ -1,12 +1,17 @@
 package com.github.LucasOyarzun.finalreality.model.character;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.classes.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Set of tests for the {@code Enemy} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 class EnemyTest extends AbstractCharacterTest {
 
   private static final String ENEMY_NAME = "Goblin";
@@ -15,6 +20,9 @@ class EnemyTest extends AbstractCharacterTest {
   private Thief player2;
   private Engineer player3;
 
+  /**
+   * Creates a new Enemy and PlayerCharacters
+   */
   @BeforeEach
   void setUp() {
     basicSetUp();
@@ -24,15 +32,21 @@ class EnemyTest extends AbstractCharacterTest {
     player3 = new Engineer("Player3", 100, 50, turns);
   }
 
+  /**
+   * Checks that the class' constructor works properly.
+   */
   @Test
   void constructorTest() {
     checkConstruction(new Enemy(ENEMY_NAME, 100, 10,
-                          10, 10, turns), goblin,
-            new Enemy(ENEMY_NAME, 100, 10, 11, 10, turns),
+                          10, 40, turns), goblin,
+            new Enemy(ENEMY_NAME, 100, 10, 11, 40, turns),
             new Knight(ENEMY_NAME, 100, 10, turns),
             player);
   }
 
+  /**
+   * Test the waitTurn method in enemies.
+   */
   @Test
   void waitTurnTest() {
     assertTrue(turns.isEmpty());
@@ -71,7 +85,12 @@ class EnemyTest extends AbstractCharacterTest {
     assertFalse(player.isAlive());
     assertEquals(0, player.getLifePoints());
 
-    /*Attack whit different player's defense */
+    /*Attack to a dead character*/
+    goblin.attack(player);
+    assertFalse(player.isAlive());
+    assertEquals(0, player.getLifePoints());
+
+    /*Attack with different player's defense */
     assertTrue(player2.isAlive());
     goblin.attack(player2);
     assertTrue(player2.isAlive());
@@ -82,7 +101,5 @@ class EnemyTest extends AbstractCharacterTest {
     goblin.attack(player3);
     assertTrue(player3.isAlive());
     assertEquals(100, player3.getLifePoints());
-
   }
-
 }

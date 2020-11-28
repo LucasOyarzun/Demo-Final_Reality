@@ -4,6 +4,12 @@ import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Set of tests for the {@code Staff} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 public class StaffTest extends AbstractWeaponTest {
 
     private static final String STAFF_NAME = "Test Staff";
@@ -13,6 +19,9 @@ public class StaffTest extends AbstractWeaponTest {
 
     private Staff testStaff;
 
+    /**
+     * Creates a new Staff
+     */
     @BeforeEach
     void setUp() {
         testStaff = new Staff(STAFF_NAME, DAMAGE,SPEED, MAGIC_DAMAGE);

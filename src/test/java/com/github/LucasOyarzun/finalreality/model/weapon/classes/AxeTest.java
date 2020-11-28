@@ -4,6 +4,12 @@ import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Set of tests for the {@code Axe} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 public class AxeTest extends AbstractWeaponTest {
 
     private static final String AXE_NAME = "Test Axe";
@@ -12,6 +18,9 @@ public class AxeTest extends AbstractWeaponTest {
 
     private Axe testAxe;
 
+    /**
+     * Creates a new Axe
+     */
     @BeforeEach
     void setUp() {
         testAxe = new Axe(AXE_NAME, DAMAGE, SPEED);

@@ -1,6 +1,5 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
-import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -8,7 +7,7 @@ import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharac
  * A weapon can be used by a PlayerCharacter of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author Lucas Oyarzun Mendez
+ * @author Lucas Oyarzun Mendez.
  */
 public interface IWeapon {
 

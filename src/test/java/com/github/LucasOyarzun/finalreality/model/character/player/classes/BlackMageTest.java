@@ -1,15 +1,18 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
-import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
-import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
-import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Set of tests for the {@code BlackMage} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 class BlackMageTest extends AbstractPlayerCharacterTest {
 
     private static final String BLACK_MAGE_NAME = "Vivi";
@@ -24,19 +27,31 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         vivi = new BlackMage(BLACK_MAGE_NAME,100, 10,100, turns);
     }
 
+    /**
+     * Test the waitTurn method in enemies.
+     */
     @Test
     void waitTurnTest() {
         vivi.equip(testStaff);
         checkWaitTurn(vivi);
     }
 
+    /**
+     * Checks that the class' constructor works properly.
+     */
     @Test
     void constructorTest() {
         checkConstruction(new BlackMage(BLACK_MAGE_NAME,100,10,100, turns),
                 vivi,
                 new BlackMage("Different name",100,10,100, turns),
-                new Knight(BLACK_MAGE_NAME,100,10,turns),
+                new WhiteMage(BLACK_MAGE_NAME,100,10, 100,turns),
                 goblin);
+
+        //Not equals with another Knight with different weapon//
+        BlackMage withOtherWeapon = new BlackMage(BLACK_MAGE_NAME,100,10, 100, turns);
+        withOtherWeapon.equip(testKnife);
+        vivi.equip(testStaff);
+        assertNotEquals(withOtherWeapon, vivi);
     }
 
     /**
@@ -73,6 +88,11 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         vivi.attack(goblin);
         assertTrue(goblin.isAlive());
         assertEquals(5, goblin.getLifePoints());
+        vivi.attack(goblin);
+        assertFalse(goblin.isAlive());
+        assertEquals(0, goblin.getLifePoints());
+
+        /*Attack to a dead enemy*/
         vivi.attack(goblin);
         assertFalse(goblin.isAlive());
         assertEquals(0, goblin.getLifePoints());

@@ -1,6 +1,5 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
-import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +8,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Set of tests for the {@code WhiteMage} class.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Lucas Oyarzun Mendez.
+ */
 class WhiteMageTest extends AbstractPlayerCharacterTest {
 
     private static final String WHITE_MAGE_NAME = "Eiko";
@@ -25,19 +30,31 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
 
     }
 
+    /**
+     * Test the waitTurn method in enemies.
+     */
     @Test
     void waitTurnTest() {
         eiko.equip(testStaff);
         checkWaitTurn(eiko);
     }
 
+    /**
+     * Checks that the class' constructor works properly.
+     */
     @Test
     void constructorTest() {
         checkConstruction(new WhiteMage(WHITE_MAGE_NAME,100,10,100, turns),
                 eiko,
                 new WhiteMage("Different name",100,10,100, turns),
-                new Knight(WHITE_MAGE_NAME,100,10,turns),
+                new BlackMage(WHITE_MAGE_NAME,100,10, 100,turns),
                 goblin);
+
+        //Not equals with another WhiteMage with different weapon//
+        WhiteMage withOtherWeapon = new WhiteMage(WHITE_MAGE_NAME,100,10,100, turns);
+        withOtherWeapon.equip(testStaff);
+        eiko.equip(new Staff("Other staff", 100, 100, 100));
+        assertNotEquals(withOtherWeapon, eiko);
     }
 
     /**
@@ -57,7 +74,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
     }
 
     /**
-     * Test the attack and equip methods in Enemy
+     * Test the attack and equip methods of WhiteMage
      */
     @Test
     void attackTest() {
@@ -76,8 +93,12 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
         eiko.attack(goblin);
         assertFalse(goblin.isAlive());
         assertEquals(0, goblin.getLifePoints());
+        /*Attack to a dead enemy*/
+        eiko.attack(goblin);
+        assertFalse(goblin.isAlive());
+        assertEquals(0, goblin.getLifePoints());
 
-        /*Attack whit different player's defense */
+        /*Attack with different player's defense */
         assertTrue(demon.isAlive());
         eiko.attack(demon);
         assertTrue(demon.isAlive());
