@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import com.github.LucasOyarzun.finalreality.controller.GameController;
 import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -67,16 +68,12 @@ public class Enemy extends AbstractCharacter {
     return hashCode() == enemy.hashCode();
   }
 
-  /**
-   * Returns the weight of this enemy.
-   */
+  @Override
   public int getWeight() {
     return weight;
   }
 
-  /**
-   * Return the enemy's damage.
-   */
+  @Override
   public int getDamage() {
     return attack;
   }
@@ -106,6 +103,11 @@ public class Enemy extends AbstractCharacter {
   @Override
   public void controllerAttack(GameController controller){
     controller.attackEnemy(this);
+  }
+
+  @Override
+  public void beOrderedToEquipBy(GameController gameController, IWeapon weapon) {
+    //do nothing
   }
 
   @Override

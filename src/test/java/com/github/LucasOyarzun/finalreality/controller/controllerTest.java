@@ -102,6 +102,38 @@ public class controllerTest {
     }
 
     /**
+     * Checks that de askInformation methods works properly.
+     */
+    @Test
+    void characterInfoTest() {
+        assertEquals("", controller.askCharacterName(adelbert));
+        assertEquals(-1, controller.askCharacterLifePoints(adelbert));
+        assertEquals(-1, controller.askCharacterDamage(adelbert));
+        assertEquals(-1, controller.askCharacterDefense(adelbert));
+        assertEquals(-1, controller.askCharacterWeight(adelbert));
+        controller.addPlayerCharacter(adelbert);
+        assertEquals("Adelbert", controller.askCharacterName(adelbert));
+        assertEquals(200, controller.askCharacterLifePoints(adelbert));
+        assertEquals(30, controller.askCharacterDefense(adelbert));
+        controller.addWeapon(testSword);
+        controller.equipWeapontoCharacter(testSword, adelbert);
+        assertEquals(50, controller.askCharacterDamage(adelbert));
+        assertEquals(30, controller.askCharacterWeight(adelbert));
+
+        assertEquals("", controller.askCharacterName(devil1));
+        assertEquals(-1, controller.askCharacterLifePoints(devil1));
+        assertEquals(-1, controller.askCharacterDamage(devil1));
+        assertEquals(-1, controller.askCharacterDefense(devil1));
+        assertEquals(-1, controller.askCharacterWeight(devil1));
+        controller.addEnemy(devil1);
+        assertEquals("Devil1", controller.askCharacterName(devil1));
+        assertEquals(60, controller.askCharacterLifePoints(devil1));
+        assertEquals(25, controller.askCharacterDefense(devil1));
+        assertEquals(40, controller.askCharacterDamage(devil1));
+        assertEquals(32, controller.askCharacterWeight(devil1));
+
+    }
+    /**
      * Checks that the add/remove Enemy method works properly.
      */
     @Test
@@ -167,8 +199,10 @@ public class controllerTest {
     void equipWeaponTest() {
         controller.addPlayerCharacter(eiko);
         controller.addPlayerCharacter(adelbert);
+
         assertNull(eiko.getEquippedWeapon());
         assertNull(adelbert.getEquippedWeapon());
+
         controller.equipWeapontoCharacter(testSword, adelbert);
         assertNull(adelbert.getEquippedWeapon());
 
@@ -184,6 +218,45 @@ public class controllerTest {
         controller.equipWeapontoCharacter(testStaff, eiko);
         assertEquals(testStaff, eiko.getEquippedWeapon());
     }
+    /**
+     * Check that the changeWeapon method works properly.
+     */
+    @Test
+    void changeWeaponTest() throws InterruptedException {
+        controller.addPlayerCharacter(adelbert);
+        controller.addPlayerCharacter(cid);
+        controller.addWeapon(testAxe);
+        controller.addWeapon(testBow);
+        controller.addWeapon(testSword);
+        controller.addWeapon(testStaff);
+        controller.equipWeapontoCharacter(testAxe, adelbert);
+        controller.equipWeapontoCharacter(testBow, cid);
+        assertEquals(testAxe, adelbert.getEquippedWeapon());
+        assertEquals(testBow, cid.getEquippedWeapon());
+        assertEquals(2, player.getInventory().size());
+
+        controller.startGame();
+
+        controller.pickCharacterFromQueue();
+        assertNull(controller.getActualCharacter());
+
+        Thread.sleep(1500);
+        controller.pickCharacterFromQueue();
+        assertEquals(adelbert, controller.getActualCharacter());
+        controller.changeWeapon(testSword);
+        assertEquals(testSword, adelbert.getEquippedWeapon());
+        assertTrue(player.getInventory().contains(testAxe));
+        controller.attack(devil1);
+
+        controller.pickCharacterFromQueue(); //Adelbert
+        Thread.sleep(1500);
+        controller.pickCharacterFromQueue(); //Adelbert
+        Thread.sleep(1500);
+        controller.pickCharacterFromQueue(); //Cid
+        assertEquals(cid, controller.getActualCharacter());
+        controller.changeWeapon(testAxe);
+        assertEquals(testAxe, cid.getEquippedWeapon());
+    }
 
     /**
      * Checks that the queue methods works properly.
@@ -196,8 +269,8 @@ public class controllerTest {
         controller.addPlayerCharacter(eiko);
         controller.addWeapon(testAxe);
         controller.addWeapon(testStaff);
-        controller.equipWeapontoCharacter(testStaff, eiko);
         controller.equipWeapontoCharacter(testAxe, adelbert);
+        controller.equipWeapontoCharacter(testStaff, eiko);
         controller.addEnemy(devil1);
         controller.addEnemy(devil2);
 

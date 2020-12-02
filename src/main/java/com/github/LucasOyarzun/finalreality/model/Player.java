@@ -92,7 +92,12 @@ public class Player {
      */
     public void equipWeapon(IWeapon weapon, IPlayerCharacter character) {
         if (characters.contains(character) && inventory.contains(weapon)) {
+            if (character.getEquippedWeapon() != null) { //If the character has a weapon, add it again to the inventory
+                addWeapon(character.getEquippedWeapon());
+            }
             character.equip(weapon);
+
+            removeWeapon(weapon);
         }
     }
 
@@ -107,8 +112,9 @@ public class Player {
      * Return this Player's list of characters.
      */
     public ArrayList<IPlayerCharacter> getCharacters() {
-        return this.characters;
+        return characters;
     }
+
 
     @Override
     public boolean equals(Object o) {

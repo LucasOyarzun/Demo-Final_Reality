@@ -3,6 +3,7 @@ package com.github.LucasOyarzun.finalreality.model.character;
 import com.github.LucasOyarzun.finalreality.controller.GameController;
 import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 
 /**
  * This represents a character from the game.
@@ -38,6 +39,16 @@ public interface ICharacter {
    * Return this character's Life Points.
    */
   int getLifePoints();
+
+  /**
+   * Return this character's weight.
+   */
+  int getWeight();
+
+  /**
+   * Return this character's AttackPoints
+   */
+  int getDamage();
 
   /**
    * Decrease this character's life Points by a int value.
@@ -80,7 +91,13 @@ public interface ICharacter {
 
   /**
    * Attack ordered by a controller.
-   * @param controller Controller hwo ordered the attack.
+   * @param controller Controller who ordered the attack.
    */
   void controllerAttack(GameController controller);
+
+  /**
+   * If it's a PlayerCharacter, it will equip a weapon ordered by a controller.
+   * @param gameController Controller who ordered.
+   */
+  void beOrderedToEquipBy(GameController gameController, IWeapon weapon);
 }

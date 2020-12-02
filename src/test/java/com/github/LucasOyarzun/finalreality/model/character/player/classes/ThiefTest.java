@@ -52,6 +52,8 @@ class ThiefTest extends AbstractPlayerCharacterTest {
         withOtherWeapon.equip(testSword);
         zidane.equip(testBow);
         assertNotEquals(withOtherWeapon, zidane);
+
+
     }
 
     /**
@@ -63,6 +65,7 @@ class ThiefTest extends AbstractPlayerCharacterTest {
         zidane.equip(testAxe);
         zidane.equip(testKnife);
         assertNull(zidane.getEquippedWeapon());
+        assertEquals(0 , zidane.getWeight());
 
         zidane.equip(testSword);
         assertEquals(testSword, zidane.getEquippedWeapon());
@@ -70,6 +73,7 @@ class ThiefTest extends AbstractPlayerCharacterTest {
         assertEquals(testBow, zidane.getEquippedWeapon());
         zidane.equip(testStaff);
         assertEquals(testStaff, zidane.getEquippedWeapon());
+        assertEquals(10, zidane.getWeight());
     }
 
     /**

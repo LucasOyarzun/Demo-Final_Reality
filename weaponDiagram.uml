@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>com.github.LucasOyarzun.finalreality.model.weapon.IWeapon</OriginalElement>
+  <OriginalElement>com.github.LucasOyarzun.finalreality.model.weapon</OriginalElement>
   <nodes>
     <node x="0.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff</node>
     <node x="0.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.BowTest</node>
-    <node x="370.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.StaffTest</node>
-    <node x="780.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Sword</node>
-    <node x="555.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.SwordTest</node>
-    <node x="260.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife</node>
+    <node x="555.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.StaffTest</node>
+    <node x="260.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Sword</node>
+    <node x="520.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife</node>
+    <node x="185.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.SwordTest</node>
     <node x="258.0" y="505.0">com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest</node>
     <node x="520.0" y="0.0">com.github.LucasOyarzun.finalreality.model.weapon.IWeapon</node>
     <node x="740.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.KnifeTest</node>
-    <node x="185.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.AxeTest</node>
-    <node x="520.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Bow</node>
+    <node x="370.0" y="609.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.AxeTest</node>
+    <node x="780.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Bow</node>
     <node x="553.0" y="170.0">com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon</node>
     <node x="1040.0" y="362.0">com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
+    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Sword" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
       <point x="0.0" y="-49.0" />
       <point x="380.0" y="342.0" />
       <point x="605.2" y="342.0" />
       <point x="-34.799999999999955" y="71.0" />
     </edge>
-    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Sword" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
+    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
       <point x="0.0" y="-49.0" />
-      <point x="900.0" y="342.0" />
-      <point x="674.8" y="342.0" />
-      <point x="34.799999999999955" y="71.0" />
+      <point x="0.0" y="71.0" />
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
       <point x="0.0" y="-49.0" />
@@ -39,19 +37,9 @@
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.SwordTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
       <point x="0.0" y="-38.0" />
-      <point x="637.5" y="589.0" />
-      <point x="530.3000000000001" y="589.0" />
-      <point x="77.80000000000007" y="27.0" />
-    </edge>
-    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.StaffTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
-      <point x="0.0" y="-38.0" />
-      <point x="0.0" y="27.0" />
-    </edge>
-    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
-      <point x="0.0" y="-49.0" />
-      <point x="1160.0" y="332.0" />
-      <point x="709.6" y="332.0" />
-      <point x="69.60000000000002" y="71.0" />
+      <point x="267.5" y="589.0" />
+      <point x="374.70000000000005" y="589.0" />
+      <point x="-77.79999999999995" y="27.0" />
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.BowTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
       <point x="0.0" y="-38.0" />
@@ -59,15 +47,27 @@
       <point x="296.9" y="579.0" />
       <point x="-155.60000000000002" y="27.0" />
     </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.StaffTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
+      <point x="0.0" y="-38.0" />
+      <point x="637.5" y="589.0" />
+      <point x="530.3000000000001" y="589.0" />
+      <point x="77.80000000000007" y="27.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
+      <point x="0.0" y="-49.0" />
+      <point x="1160.0" y="332.0" />
+      <point x="709.6" y="332.0" />
+      <point x="69.60000000000002" y="71.0" />
+    </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.AxeTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
       <point x="0.0" y="-38.0" />
-      <point x="267.5" y="589.0" />
-      <point x="374.70000000000005" y="589.0" />
-      <point x="-77.79999999999995" y="27.0" />
+      <point x="0.0" y="27.0" />
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.Bow" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon">
       <point x="0.0" y="-49.0" />
-      <point x="0.0" y="71.0" />
+      <point x="900.0" y="342.0" />
+      <point x="674.8" y="342.0" />
+      <point x="34.799999999999955" y="71.0" />
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.model.weapon.classes.KnifeTest" target="com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest">
       <point x="0.0" y="-38.0" />
@@ -80,8 +80,22 @@
       <point x="0.0" y="60.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="800.0" y="192.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="794.5" y="168.5" />
+  <SelectedNodes>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.BowTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.StaffTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.Sword</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.Knife</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.SwordTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeaponTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.IWeapon</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.KnifeTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.AxeTest</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.Bow</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon</node>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon.classes.Axe</node>
+  </SelectedNodes>
   <Categories>
     <Category>Methods</Category>
   </Categories>

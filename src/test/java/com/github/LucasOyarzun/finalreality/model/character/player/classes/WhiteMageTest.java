@@ -68,9 +68,11 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
         eiko.equip(testBow);
         eiko.equip(testSword);
         assertNull(eiko.getEquippedWeapon());
+        assertEquals(0, eiko.getWeight());
 
         eiko.equip(testStaff);
         assertEquals(testStaff, eiko.getEquippedWeapon());
+        assertEquals(10, eiko.getWeight());
     }
 
     /**

@@ -97,6 +97,75 @@ public class GameController {
         return actualCharacter;
     }
 
+
+    //Ask character's information
+
+    /**
+     * Ask character's name if character is in the PlayerCharacter or Enemy List
+     * @param character
+     */
+    public String askCharacterName(ICharacter character) {
+        if (player.getCharacters().contains(character) ||
+                com.getEnemies().contains(character)) {
+            return character.getName();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Ask character's LifePoints if character is in the PlayerCharacter or Enemy List
+     * @param character
+     */
+    public int askCharacterLifePoints(ICharacter character) {
+        if (player.getCharacters().contains(character) ||
+                com.getEnemies().contains(character)) {
+            return character.getLifePoints();
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Ask character's Damage if character is in the PlayerCharacter or Enemy List
+     * @param character
+     */
+    public int askCharacterDamage(ICharacter character) {
+        if (player.getCharacters().contains(character) ||
+                com.getEnemies().contains(character)) {
+            return character.getDamage();
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Ask character's Defense if character is in the PlayerCharacter or Enemy List
+     * @param character
+     */
+    public int askCharacterDefense(ICharacter character) {
+        if (player.getCharacters().contains(character) ||
+                com.getEnemies().contains(character)) {
+            return character.getDefense();
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Ask character's Weight if character is in the PlayerCharacter or Enemy List
+     * @param character
+     */
+    public int askCharacterWeight(ICharacter character) {
+        if (player.getCharacters().contains(character) ||
+                com.getEnemies().contains(character)) {
+            return character.getWeight();
+        }
+        else {
+            return -1;
+        }
+    }
+
     /**
      * Picks the first character in queue.
      */
@@ -210,6 +279,11 @@ public class GameController {
      */
     public void equipWeapontoCharacter(IWeapon weapon, IPlayerCharacter character) {
         player.equipWeapon(weapon, character);
+
+    }
+
+    public void changeWeapon(IWeapon weapon) {
+        actualCharacter.beOrderedToEquipBy(this, weapon);
     }
 
     /**

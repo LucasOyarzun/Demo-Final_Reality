@@ -68,13 +68,18 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     return equippedWeapon;
   }
 
-  /**
-   * Return the player's damage
-   */
+  @Override
   public int getDamage() {
     return equippedWeapon.getDamage();
   }
 
+  public int getWeight() {
+    if (equippedWeapon != null) {
+      return equippedWeapon.getWeight();
+    } else{
+      return 0;
+    }
+  }
   @Override
   public void equip(IWeapon weapon) {
     weapon.beEquipedBy(this);
@@ -131,6 +136,11 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    */
   public void addListener(IEventHandler handler) {
     characterEndsTurn.addPropertyChangeListener(handler);
+  }
+
+  @Override
+  public void beOrderedToEquipBy(GameController gameController, IWeapon weapon) {
+    gameController.equipWeapontoCharacter(weapon, this);
   }
 
 }

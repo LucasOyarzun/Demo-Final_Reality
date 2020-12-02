@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>com.github.LucasOyarzun.finalreality.controller.GameController</OriginalElement>
+  <OriginalElement>com.github.LucasOyarzun.finalreality</OriginalElement>
   <nodes>
+    <node x="213.0" y="1056.0">com.github.LucasOyarzun.finalreality.model.weapon</node>
     <node x="405.0" y="0.0">com.github.LucasOyarzun.finalreality.model.Player</node>
-    <node x="749.0" y="0.0">com.github.LucasOyarzun.finalreality.model.Computer</node>
-    <node x="788.0" y="294.0">com.github.LucasOyarzun.finalreality.model.character</node>
-    <node x="0.0" y="1004.0">com.github.LucasOyarzun.finalreality.controller.playerCharacterDeathHandler</node>
-    <node x="608.0" y="1004.0">com.github.LucasOyarzun.finalreality.controller.characterEndsTurnHandler</node>
-    <node x="304.0" y="1004.0">com.github.LucasOyarzun.finalreality.controller.enemyDeathHandler</node>
-    <node x="0.0" y="627.0">com.github.LucasOyarzun.finalreality.controller.controllerTest</node>
+    <node x="0.0" y="759.0">com.github.LucasOyarzun.finalreality.model.Computer</node>
+    <node x="306.0" y="839.0">com.github.LucasOyarzun.finalreality.controller.playerCharacterDeathHandler</node>
+    <node x="0.0" y="1056.0">com.github.LucasOyarzun.finalreality.model.character</node>
+    <node x="914.0" y="839.0">com.github.LucasOyarzun.finalreality.controller.characterEndsTurnHandler</node>
+    <node x="610.0" y="839.0">com.github.LucasOyarzun.finalreality.controller.enemyDeathHandler</node>
+    <node x="749.0" y="0.0">com.github.LucasOyarzun.finalreality.controller.controllerTest</node>
     <node x="0.0" y="0.0">com.github.LucasOyarzun.finalreality.controller.GameController</node>
-    <node x="370.0" y="924.0">com.github.LucasOyarzun.finalreality.controller.IEventHandler</node>
+    <node x="676.0" y="759.0">com.github.LucasOyarzun.finalreality.controller.IEventHandler</node>
   </nodes>
   <notes />
   <edges>
@@ -21,19 +22,30 @@
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.controller.characterEndsTurnHandler" target="com.github.LucasOyarzun.finalreality.controller.IEventHandler">
       <point x="0.0" y="-27.0" />
-      <point x="750.0" y="979.0" />
-      <point x="496.66666666666663" y="979.0" />
+      <point x="1056.0" y="814.0" />
+      <point x="802.6666666666666" y="814.0" />
       <point x="50.66666666666663" y="15.0" />
     </edge>
     <edge source="com.github.LucasOyarzun.finalreality.controller.playerCharacterDeathHandler" target="com.github.LucasOyarzun.finalreality.controller.IEventHandler">
       <point x="0.0" y="-27.0" />
-      <point x="142.0" y="979.0" />
-      <point x="395.3333333333333" y="979.0" />
-      <point x="-50.666666666666686" y="15.0" />
+      <point x="448.0" y="814.0" />
+      <point x="701.3333333333334" y="814.0" />
+      <point x="-50.66666666666663" y="15.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="482.0" y="267.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="476.5" y="450.5" />
+  <SelectedNodes>
+    <node>com.github.LucasOyarzun.finalreality.model.weapon</node>
+    <node>com.github.LucasOyarzun.finalreality.model.Player</node>
+    <node>com.github.LucasOyarzun.finalreality.model.Computer</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.playerCharacterDeathHandler</node>
+    <node>com.github.LucasOyarzun.finalreality.model.character</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.characterEndsTurnHandler</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.enemyDeathHandler</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.controllerTest</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.GameController</node>
+    <node>com.github.LucasOyarzun.finalreality.controller.IEventHandler</node>
+  </SelectedNodes>
   <Categories>
     <Category>Methods</Category>
   </Categories>
