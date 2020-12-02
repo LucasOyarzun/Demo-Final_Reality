@@ -64,11 +64,13 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         vivi.equip(testBow);
         vivi.equip(testAxe);
         assertNull(vivi.getEquippedWeapon());
+        assertEquals(0, vivi.getWeight());
 
         vivi.equip(testStaff);
         assertEquals(testStaff, vivi.getEquippedWeapon());
         vivi.equip(testKnife);
         assertEquals(testKnife, vivi.getEquippedWeapon());
+        assertEquals(10, vivi.getWeight());
     }
 
     /**

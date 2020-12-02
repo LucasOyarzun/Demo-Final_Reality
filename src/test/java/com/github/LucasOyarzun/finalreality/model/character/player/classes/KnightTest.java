@@ -64,6 +64,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
         adelbert.equip(testStaff);
         adelbert.equip(testBow);
         assertNull(adelbert.getEquippedWeapon());
+        assertEquals(0, adelbert.getWeight());
 
         adelbert.equip(testSword);
         assertEquals(testSword, adelbert.getEquippedWeapon());
@@ -71,6 +72,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
         assertEquals(testAxe, adelbert.getEquippedWeapon());
         adelbert.equip(testKnife);
         assertEquals(testKnife, adelbert.getEquippedWeapon());
+        assertEquals(10, adelbert.getWeight());
     }
 
     /**

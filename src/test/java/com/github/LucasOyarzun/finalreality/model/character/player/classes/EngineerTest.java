@@ -63,12 +63,14 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         cid.equip(testStaff);
         cid.equip(testKnife);
         cid.equip(testSword);
+        assertEquals(0, cid.getWeight());
 
         assertNull(cid.getEquippedWeapon());
         cid.equip(testAxe);
         assertEquals(testAxe, cid.getEquippedWeapon());
         cid.equip(testBow);
         assertEquals(testBow, cid.getEquippedWeapon());
+        assertEquals(10, cid.getWeight());
     }
 
     /**
