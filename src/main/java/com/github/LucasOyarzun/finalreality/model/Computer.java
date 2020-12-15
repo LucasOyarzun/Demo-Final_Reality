@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model;
 
+import com.github.LucasOyarzun.finalreality.controller.GameController;
 import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
@@ -16,36 +17,34 @@ import java.util.concurrent.BlockingQueue;
  * @author Lucas Oyarzun Mendez.
  */
 
-public class Computer {
+public class Computer implements IPlayer{
 
     private final PropertyChangeSupport playerCharacterDeathEvent = new PropertyChangeSupport(this);
-    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private final ArrayList<ICharacter> enemies = new ArrayList<>();
     protected BlockingQueue<ICharacter> turns;
     protected String name;
     private boolean win;
+    private GameController controller;
 
     /**
      *Creates a new "Computer Player".
      * @param name a name for computer player.
      * @param turns the queue with the characters waiting for their turn.
      */
-    public Computer (String name, BlockingQueue<ICharacter> turns) {
+    public Computer (String name, GameController controller, BlockingQueue<ICharacter> turns) {
         this.name = name;
         this.turns = turns;
+        this.controller  =controller;
         win = false;
 
     }
 
-    /**
-     * Return true if this character won the game.
-     */
+    @Override
     public boolean askWin() {
         return win;
     }
 
-    /**
-     * Computer wins the game.
-     */
+    @Override
     public void win() {
         win = true;
     }
@@ -66,10 +65,8 @@ public class Computer {
         enemies.remove(enemy);
     }
 
-    /**
-     * Return this Computer's list of enemies.
-     */
-    public ArrayList<Enemy> getEnemies() {
+    @Override
+    public ArrayList<ICharacter> getCharacters() {
         return enemies;
     }
 
@@ -90,33 +87,25 @@ public class Computer {
         return Objects.hash(name);
     }
 
-    /**
-     * empty the Player's character list.
-     */
+    @Override
     public void clearList() {
         enemies.clear();
     }
 
-    /**
-     * Order an enemy to attack a character.
-     * @param enemy     enemy ordered.
-     * @param character character attacked.
-     */
-    public void attack(ICharacter enemy, IPlayerCharacter character) {
-        enemy.attack(character);
-        if (!character.isAlive()) {
+    @Override
+    public void attack(ICharacter enemy, ICharacter playerCharacter) {
+        enemy.attack(playerCharacter);
+        if (!playerCharacter.isAlive()) {
             playerCharacterDeathEvent.firePropertyChange(
-                    character.getName() + "has died",
+                    playerCharacter.getName() + "has died",
                     null,
-                    character
+                    playerCharacter
                     );
         }
+        enemy.waitTurn();
     }
 
-    /**
-     * Add 2 handlers to this Player.
-     * @param handler  Handler of playerCharacter's deaths.
-     */
+    @Override
     public void addListener(IEventHandler handler) {
         playerCharacterDeathEvent.addPropertyChangeListener(handler);
     }

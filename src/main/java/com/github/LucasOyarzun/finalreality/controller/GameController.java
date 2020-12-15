@@ -1,6 +1,11 @@
 package com.github.LucasOyarzun.finalreality.controller;
 
+import com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException;
+import com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException;
+import com.github.LucasOyarzun.finalreality.phases.Phase;
+import com.github.LucasOyarzun.finalreality.phases.MainPhase;
 import com.github.LucasOyarzun.finalreality.model.Computer;
+import com.github.LucasOyarzun.finalreality.model.IPlayer;
 import com.github.LucasOyarzun.finalreality.model.Player;
 import com.github.LucasOyarzun.finalreality.model.character.*;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
@@ -19,6 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GameController {
     private final Player player;
     private final Computer com;
+    private Phase actualPhase;
     private ICharacter actualCharacter;
     protected BlockingQueue<ICharacter> turns;
     private final IEventHandler playerCharacterDeathHandler = new playerCharacterDeathHandler(this);
@@ -29,9 +35,10 @@ public class GameController {
      * Creates a new controller.
      */
     public GameController() {
+        setPhase(new MainPhase(this));
         turns = new LinkedBlockingQueue<>();
-        player = new Player("Player", turns);
-        com = new Computer("COM", turns);
+        player = new Player("Player",this, turns);
+        com = new Computer("COM",this, turns);
         player.addListener(enemyDeathHandler);
         com.addListener(playerCharacterDeathHandler);
     }
@@ -40,12 +47,13 @@ public class GameController {
      * Start a game, adding characters to turns queue.
      */
     public void startGame() {
-        for (int i=0;i<getPlayerCharactersList().size();i++) {
-            getPlayerCharactersList().get(i).waitTurn();
+        for (int i = 0; i < getPlayerCharactersList().size()-1; i++) {
+            getPlayerCharactersList().get(i+1).waitTurn(); // Doesn't add the first character.
         }
-        for (int i=0;i<getEnemiesList().size();i++) {
+        for (int i = 0; i < getEnemiesList().size(); i++) {
             getEnemiesList().get(i).waitTurn();
         }
+        actualCharacter = getPlayerCharactersList().get(0); // Everytime the game starts with a PlayerCharacter's turn.
     }
 
     /**
@@ -72,15 +80,15 @@ public class GameController {
     /**
      * Return the Player's characters list.
      */
-    public ArrayList<IPlayerCharacter> getPlayerCharactersList() {
+    public ArrayList<ICharacter> getPlayerCharactersList() {
         return player.getCharacters();
     }
 
     /**
      * Return the Computer's enemy list.
      */
-    public ArrayList<Enemy> getEnemiesList() {
-        return com.getEnemies();
+    public ArrayList<ICharacter> getEnemiesList() {
+        return com.getCharacters();
     }
 
     /**
@@ -97,6 +105,14 @@ public class GameController {
         return actualCharacter;
     }
 
+    public IPlayer getActualPlayer() {
+        if (getPlayerCharactersList().contains(actualCharacter)) {
+            return player;
+        } else {
+            return com;
+        }
+    }
+
 
     //Ask character's information
 
@@ -106,7 +122,7 @@ public class GameController {
      */
     public String askCharacterName(ICharacter character) {
         if (player.getCharacters().contains(character) ||
-                com.getEnemies().contains(character)) {
+                com.getCharacters().contains(character)) {
             return character.getName();
         } else {
             return "";
@@ -115,11 +131,12 @@ public class GameController {
 
     /**
      * Ask character's LifePoints if character is in the PlayerCharacter or Enemy List
+     *
      * @param character
      */
     public int askCharacterLifePoints(ICharacter character) {
         if (player.getCharacters().contains(character) ||
-                com.getEnemies().contains(character)) {
+                com.getCharacters().contains(character)) {
             return character.getLifePoints();
         } else {
             return -1;
@@ -128,11 +145,12 @@ public class GameController {
 
     /**
      * Ask character's Damage if character is in the PlayerCharacter or Enemy List
+     *
      * @param character
      */
     public int askCharacterDamage(ICharacter character) {
         if (player.getCharacters().contains(character) ||
-                com.getEnemies().contains(character)) {
+                com.getCharacters().contains(character)) {
             return character.getDamage();
         } else {
             return -1;
@@ -141,11 +159,12 @@ public class GameController {
 
     /**
      * Ask character's Defense if character is in the PlayerCharacter or Enemy List
+     *
      * @param character
      */
     public int askCharacterDefense(ICharacter character) {
         if (player.getCharacters().contains(character) ||
-                com.getEnemies().contains(character)) {
+                com.getCharacters().contains(character)) {
             return character.getDefense();
         } else {
             return -1;
@@ -154,14 +173,14 @@ public class GameController {
 
     /**
      * Ask character's Weight if character is in the PlayerCharacter or Enemy List
+     *
      * @param character
      */
     public int askCharacterWeight(ICharacter character) {
         if (player.getCharacters().contains(character) ||
-                com.getEnemies().contains(character)) {
+                com.getCharacters().contains(character)) {
             return character.getWeight();
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -170,7 +189,7 @@ public class GameController {
      * Picks the first character in queue.
      */
     public void pickCharacterFromQueue() {
-        if(!turns.isEmpty()) {
+        if (!turns.isEmpty()) {
             actualCharacter = turns.poll();
             characterIsWaiting(actualCharacter);
         }
@@ -180,6 +199,7 @@ public class GameController {
 
     /**
      * A method to attack an objective whit actualCharacter.
+     *
      * @param objective objective attacked.
      */
     public void attack(ICharacter objective) {
@@ -188,6 +208,7 @@ public class GameController {
 
     /**
      * A method to attack an enemy with actualCharacter.
+     *
      * @param enemy Enemy attacked.
      */
 
@@ -197,6 +218,7 @@ public class GameController {
 
     /**
      * A method to attack an PlayerCharacter with actualCharacter.
+     *
      * @param character PlayerCharacter attacked.
      */
     public void attackPlayerCharacter(IPlayerCharacter character) {
@@ -204,8 +226,10 @@ public class GameController {
     }
 
     //Methods for testing.
+
     /**
      * Order a Player character to attack an enemy.
+     *
      * @param character Player character that will attack.
      * @param enemy     Enemy attacked.
      */
@@ -215,6 +239,7 @@ public class GameController {
 
     /**
      * Order an Enemy to attack a Player character.
+     *
      * @param enemy     Enemy that will attack.
      * @param character Player character attacked.
      */
@@ -224,6 +249,7 @@ public class GameController {
 
     /**
      * Add a Player Character to Player's characters list.
+     *
      * @param character Player character added.
      */
     public void addPlayerCharacter(IPlayerCharacter character) {
@@ -233,6 +259,7 @@ public class GameController {
 
     /**
      * Add an Enemy to Computer's enemies list.
+     *
      * @param enemy Enemy added.
      */
     public void addEnemy(Enemy enemy) {
@@ -242,6 +269,7 @@ public class GameController {
 
     /**
      * Add a Weapon to Player's weapons list.
+     *
      * @param weapon Weapon added.
      */
     public void addWeapon(IWeapon weapon) {
@@ -250,6 +278,7 @@ public class GameController {
 
     /**
      * Remove a character from the Player's character list.
+     *
      * @param character Weapon to remove.
      */
     public void removePlayerCharacter(IPlayerCharacter character) {
@@ -258,6 +287,7 @@ public class GameController {
 
     /**
      * Remove an enemy from the Computer's enemy list.
+     *
      * @param enemy Enemy to remove.
      */
     public void removeEnemy(Enemy enemy) {
@@ -266,6 +296,7 @@ public class GameController {
 
     /**
      * Remove a weapon from the Player's inventory.
+     *
      * @param weapon Weapon to remove.
      */
     public void removeWeapon(IWeapon weapon) {
@@ -274,14 +305,17 @@ public class GameController {
 
     /**
      * Equip a weapon to a selected Player character.
+     *
      * @param weapon    Weapon added.
      * @param character Character that will equip the weapon.
      */
     public void equipWeapontoCharacter(IWeapon weapon, IPlayerCharacter character) {
         player.equipWeapon(weapon, character);
-
     }
 
+    /**
+     * Change the actualcharacter's weapon.
+     */
     public void changeWeapon(IWeapon weapon) {
         actualCharacter.beOrderedToEquipBy(this, weapon);
     }
@@ -299,9 +333,7 @@ public class GameController {
             com.clearList();
             System.out.println("GAME OVER You Lose.");
         }
-
     }
-
     /**
      * Remove a dead enemy from the list of characters
      * @param deadEnemy Enemy who died.
@@ -310,12 +342,11 @@ public class GameController {
         removeEnemy(deadEnemy);
         System.out.println(deadEnemy.getName() + " has died.");
         //If the player lost the game
-        if (com.getEnemies().isEmpty()) {
+        if (com.getCharacters().isEmpty()) {
             player.win();
             player.clearList();
             System.out.println("GAME OVER You Win.");
         }
-
     }
 
     /**
@@ -323,7 +354,7 @@ public class GameController {
      * @param message message printed.
      */
     public void characterEndsTurn(String message) {
-        System.out.println(message +" and ends his/her turn.");
+        actualCharacter = null;
     }
 
     /**
@@ -332,5 +363,68 @@ public class GameController {
      */
     public void characterIsWaiting(ICharacter character) {
         System.out.println(character.getName() + " is ready to battle.");
+    }
+
+    /**
+     * Set the actualPhase
+     * @param phase Game's phase selected
+     */
+    public void setPhase(Phase phase) {
+        this.actualPhase = phase;
+        phase.setController(this);
+    }
+
+    /**
+     * Return the actual Phase
+     */
+    public Phase getActualPhase() {
+        return actualPhase;
+    }
+
+
+    /**
+     * Try to change the actualCharacter's weapon
+     * @param weapon
+     */
+    public void trytoChangeWeapon(IWeapon weapon) {
+        try {
+            actualPhase.changeWeapon(weapon);
+        } catch (InvalidDecisionException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Try to attack a Character with the actualCharacter
+     * @param character character attacked
+     */
+    public void tryToAttack(ICharacter character) {
+        try {
+            actualPhase.attack(character);
+        } catch (InvalidDecisionException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Try to pick a Character from turn's queue.
+     */
+    public void tryToPick() {
+        try {
+            actualPhase.pickCharacterFromQueue();
+        } catch (InvalidTransitionException | InvalidDecisionException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Try to change the actual Phase to SelectingAttackTargetPhase
+     */
+    public void tryToStartAttack() throws InvalidTransitionException {
+        try {
+            actualPhase.toSelectingAttackTargetPhase();
+        } catch (InvalidTransitionException e) {
+            System.out.println(e.toString());
+        }
     }
 }

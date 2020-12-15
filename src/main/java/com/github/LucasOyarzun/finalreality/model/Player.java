@@ -1,5 +1,6 @@
 package com.github.LucasOyarzun.finalreality.model;
 
+import com.github.LucasOyarzun.finalreality.controller.GameController;
 import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
@@ -17,37 +18,34 @@ import java.util.concurrent.BlockingQueue;
  * @author Lucas Oyarzun Mendez.
  */
 
-public class Player {
+public class Player implements IPlayer{
 
     private final PropertyChangeSupport enemyDeathEvent = new PropertyChangeSupport(this);
     private final String name;
-    private final ArrayList<IPlayerCharacter> characters = new ArrayList<>();
+    private final ArrayList<ICharacter> characters = new ArrayList<>();
     private final ArrayList<IWeapon> inventory = new ArrayList<>();
     protected BlockingQueue<ICharacter> turns;
     private boolean win;
+    private final GameController controller;
 
     /**
      * Creates a Player in the game.
      * @param name name of the Player.
      * @param turns Queue of turns.
      */
-    public Player (String name, BlockingQueue<ICharacter> turns) {
+    public Player (String name, GameController controller, BlockingQueue<ICharacter> turns) {
         this.name= name;
         this.turns = turns;
+        this.controller = controller;
         win = false;
-
     }
 
-    /**
-     * Return true if this character won the game.
-     */
+    @Override
     public boolean askWin() {
         return win;
     }
 
-    /**
-     * Player wins the game.
-     */
+    @Override
     public void win() {
         win = true;
     }
@@ -67,7 +65,6 @@ public class Player {
     public void removePlayerCharacter(IPlayerCharacter character) {
         characters.remove(character);
     }
-
 
     /**
      * Add a weapon to the ArrayList of weapons.
@@ -96,7 +93,6 @@ public class Player {
                 addWeapon(character.getEquippedWeapon());
             }
             character.equip(weapon);
-
             removeWeapon(weapon);
         }
     }
@@ -108,10 +104,8 @@ public class Player {
         return inventory;
     }
 
-    /**
-     * Return this Player's list of characters.
-     */
-    public ArrayList<IPlayerCharacter> getCharacters() {
+    @Override
+    public ArrayList<ICharacter> getCharacters() {
         return characters;
     }
 
@@ -140,13 +134,9 @@ public class Player {
         characters.clear();
     }
 
-    /**
-     * Order a character to attack an enemy.
-     * @param character character ordered.
-     * @param enemy     enemy attacked.
-     */
-    public void attack(ICharacter character, Enemy enemy) {
-        character.attack(enemy);
+    @Override
+    public void attack(ICharacter playerCharacter, ICharacter enemy) {
+        playerCharacter.attack(enemy);
         if (!enemy.isAlive()) {
             enemyDeathEvent.firePropertyChange(
                     enemy.getName() + "has died",
@@ -154,13 +144,12 @@ public class Player {
                     enemy
             );
         }
+        playerCharacter.waitTurn();
     }
 
-    /**
-     * Add 2 handlers to this Player.
-     * @param handler  Handler of enemy's deaths.
-     */
+    @Override
     public void addListener(IEventHandler handler) {
         enemyDeathEvent.addPropertyChangeListener(handler);
     }
+
 }
