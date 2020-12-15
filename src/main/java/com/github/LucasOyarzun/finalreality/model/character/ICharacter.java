@@ -100,4 +100,9 @@ public interface ICharacter {
    * @param gameController Controller who ordered.
    */
   void beOrderedToEquipBy(GameController gameController, IWeapon weapon);
+
+  /**
+   * Return true if this ICharacter is an Enemy;
+   */
+  boolean isEnemy();
 }

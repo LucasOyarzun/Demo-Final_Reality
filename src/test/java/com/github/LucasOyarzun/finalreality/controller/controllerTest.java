@@ -52,8 +52,8 @@ public class controllerTest {
     private static final String KNIFE_NAME = "Test Knife";
     private static final int DAMAGE = 50;
 
-    ArrayList<IPlayerCharacter> characterList;
-    ArrayList<Enemy> enemyList;
+    ArrayList<ICharacter> characterList;
+    ArrayList<ICharacter> enemyList;
     ArrayList<IWeapon> inventory;
 
     /**
@@ -90,15 +90,15 @@ public class controllerTest {
      */
     @Test
     void constructorTest() {
-        assertEquals(player, new Player("Player", turns));
+        assertEquals(player, new Player("Player",controller, turns));
         assertEquals(player, player);
-        assertNotEquals(player, new Player("Player2", turns));
-        assertNotEquals(player, new Computer("Player", turns));
+        assertNotEquals(player, new Player("Player2",controller, turns));
+        assertNotEquals(player, new Computer("Player",controller, turns));
 
         assertEquals(com, com);
-        assertEquals(com, new Computer("COM", turns));
-        assertNotEquals(com, new Computer("COM2", turns));
-        assertNotEquals(com, new Player("COM", turns));
+        assertEquals(com, new Computer("COM",controller, turns));
+        assertNotEquals(com, new Computer("COM2",controller, turns));
+        assertNotEquals(com, new Player("COM",controller, turns));
     }
 
     /**
@@ -237,11 +237,6 @@ public class controllerTest {
 
         controller.startGame();
 
-        controller.pickCharacterFromQueue();
-        assertNull(controller.getActualCharacter());
-
-        Thread.sleep(1500);
-        controller.pickCharacterFromQueue();
         assertEquals(adelbert, controller.getActualCharacter());
         controller.changeWeapon(testSword);
         assertEquals(testSword, adelbert.getEquippedWeapon());
@@ -251,7 +246,8 @@ public class controllerTest {
         controller.pickCharacterFromQueue(); //Adelbert
         Thread.sleep(1500);
         controller.pickCharacterFromQueue(); //Adelbert
-        Thread.sleep(1500);
+        Thread.sleep(3000);
+        controller.pickCharacterFromQueue(); //Adelbert
         controller.pickCharacterFromQueue(); //Cid
         assertEquals(cid, controller.getActualCharacter());
         controller.changeWeapon(testAxe);
@@ -261,6 +257,7 @@ public class controllerTest {
     /**
      * Checks that the queue methods works properly.
      */
+    /** Estaba pensado para otro tipo de fases, no las que se usaron al final*/
     @Test
     void queueTest() throws InterruptedException {
         System.out.println("////Queue Test");
@@ -276,8 +273,9 @@ public class controllerTest {
 
         controller.startGame();
 
-        controller.pickCharacterFromQueue();
-        assertNull(controller.getActualCharacter());
+        assertEquals(adelbert, controller.getActualCharacter());
+        assertEquals(player, controller.getActualPlayer());
+        controller.attack(devil1);
 
         Thread.sleep(1500);
         controller.pickCharacterFromQueue();
@@ -287,24 +285,21 @@ public class controllerTest {
         Thread.sleep(1500);
         controller.pickCharacterFromQueue();
         assertEquals(eiko, controller.getActualCharacter());
-        controller.attack(devil1);
-
-        Thread.sleep(1500);
-        controller.pickCharacterFromQueue();
-        assertEquals(adelbert, controller.getActualCharacter());
         controller.attack(devil2);
 
         Thread.sleep(1500);
         controller.pickCharacterFromQueue();
-        assertEquals(devil1, controller.getActualCharacter());
+        assertEquals(adelbert, controller.getActualCharacter());
         controller.attack(adelbert);
 
         Thread.sleep(1500);
         controller.pickCharacterFromQueue();
-        assertEquals(devil2, controller.getActualCharacter());
+        assertEquals(devil1, controller.getActualCharacter());
+        assertEquals(com, controller.getActualPlayer());
         controller.attack(adelbert);
         System.out.println("//////////////////////////");
     }
+
 
     /**
      * Checks that the attack method works properly.

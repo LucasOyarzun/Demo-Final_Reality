@@ -47,6 +47,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor
               .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+    characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
+            null,
+            this.getName() + " ends turn");
   }
 
   @Override
@@ -110,10 +113,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     if (enemy.isAlive()) {
       int damage = this.getDamage() - enemy.getDefense();
       enemy.loseLife(this.getDamage() - enemy.getDefense());
-      waitTurn();
-      characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
-              null,
-              this.getName() + " attacks "+ damage +" to " + enemy.getName());
     }
   }
 
@@ -143,5 +142,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     gameController.equipWeapontoCharacter(weapon, this);
   }
 
+  @Override
+  public boolean isEnemy() {
+    return false;
+  }
 }
 

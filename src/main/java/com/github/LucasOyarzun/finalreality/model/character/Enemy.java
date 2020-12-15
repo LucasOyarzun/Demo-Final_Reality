@@ -48,6 +48,9 @@ public class Enemy extends AbstractCharacter {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     scheduledExecutor
             .schedule(this::addToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
+    characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
+            null,
+            this.getName() + " ends turn");
   }
 
   @Override
@@ -88,10 +91,7 @@ public class Enemy extends AbstractCharacter {
     if (character.isAlive()) {
       int damage = this.getDamage() - character.getDefense();
       character.loseLife(this.getDamage() - character.getDefense());
-      waitTurn();
-      characterEndsTurn.firePropertyChange(this.getName() +" ends turn ",
-              null,
-              this.getName() + " attacks "+ damage +" to " + character.getName());
+
     }
   }
 
@@ -113,5 +113,10 @@ public class Enemy extends AbstractCharacter {
   @Override
   public void addListener(IEventHandler handler) {
     characterEndsTurn.addPropertyChangeListener(handler);
+  }
+
+  @Override
+  public boolean isEnemy() {
+    return true;
   }
 }
