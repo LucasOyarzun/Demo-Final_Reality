@@ -427,4 +427,85 @@ public class GameController {
             System.out.println(e.toString());
         }
     }
+
+
+    public int getEnemiesListSize() {
+        return getEnemiesList().size();
+    }
+
+    public ICharacter getEnemy(int i) {
+        return com.getCharacters().get(i);
+    }
+
+    public String getEnemyName(int i) {
+        return com.getCharacters().get(i).getName();
+    }
+
+    public String getEnemyHP(int i) {
+        return Integer.toString(com.getCharacters().get(i).getLifePoints());
+    }
+
+    public String getEnemyAttack(int i) {
+        return Integer.toString(com.getCharacters().get(i).getDamage());
+    }
+
+    public String getEnemyDefense(int i) {
+        return Integer.toString(com.getCharacters().get(i).getDefense());
+    }
+
+    public int getPlayerListSize() {
+        return getPlayerCharactersList().size();
+    }
+
+    public String getPlayerCharacterName(int i) {
+        return player.getCharacters().get(i).getName();
+    }
+
+    public String getPlayerCharacterHP(int i) {
+        return Integer.toString(player.getCharacters().get(i).getLifePoints());
+    }
+
+    public String getPlayerCharacterAttack(int i) {
+        return Integer.toString(player.getCharacters().get(i).getDamage());
+    }
+
+    public String getPlayerCharacterDefense(int i) {
+        return Integer.toString(player.getCharacters().get(i).getDefense());
+    }
+
+    public String getPlayerCharacterWeaponName(int i) {
+        return player.getCharacters().get(i).getEquippedWeapon().getName();
+    }
+
+    public String getPlayerCharacterClass(int i) {
+        return player.getCharacters().get(i).getClassName();
+    }
+
+    public String getActualCharacterName() {
+        if (getActualCharacter() == null) {
+            return "";
+        } else {
+            return getActualCharacter().getName();
+        }
+    }
+
+    public int getInventorySize() {
+        return getPlayerInventory().size();
+    }
+
+    public String getWeaponName(int i) {
+        return getPlayerInventory().get(i).getName();
+    }
+
+    public String getWeaponAttack(int i) {
+        return Integer.toString(getPlayerInventory().get(i).getDamage());
+    }
+
+    public String getWeaponWeight(int i) {
+        return Integer.toString(getPlayerInventory().get(i).getWeight());
+    }
+
+    public String getActualPhaseName() {
+        return getActualPhase().getName();
+    }
 }

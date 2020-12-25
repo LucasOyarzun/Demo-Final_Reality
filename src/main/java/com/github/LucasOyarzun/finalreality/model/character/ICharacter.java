@@ -102,7 +102,17 @@ public interface ICharacter {
   void beOrderedToEquipBy(GameController gameController, IWeapon weapon);
 
   /**
-   * Return true if this ICharacter is an Enemy;
+   * Return true if this ICharacter is an Enemy.
    */
   boolean isEnemy();
+
+  /**
+   * Return the Weapon equipped by this character.
+   */
+  IWeapon getEquippedWeapon();
+
+  /**
+   * Return the name of this character's class
+   */
+  String getClassName();
 }

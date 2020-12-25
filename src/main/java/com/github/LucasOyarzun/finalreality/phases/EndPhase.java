@@ -58,4 +58,9 @@ public class EndPhase extends Phase {
         controller.tryToStartAttack();
         controller.tryToAttack(character);
     }
+
+    @Override
+    public String getName() {
+        return "End Phase";
+    }
 }

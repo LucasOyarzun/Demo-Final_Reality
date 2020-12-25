@@ -88,4 +88,8 @@ public class Phase {
             controller.pickCharacterFromQueue();
         }
     }
+
+    public String getName() {
+        return "";
+    }
 }

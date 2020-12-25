@@ -146,5 +146,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   public boolean isEnemy() {
     return false;
   }
+
 }
 

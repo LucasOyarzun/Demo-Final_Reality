@@ -35,5 +35,6 @@ public class Sword extends AbstractWeapon {
     @Override
     public void beEquipedBy(IPlayerCharacter character) {
         character.equipSword(this);
+
     }
 }

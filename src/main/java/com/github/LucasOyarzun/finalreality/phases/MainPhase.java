@@ -34,4 +34,9 @@ public class MainPhase extends Phase {
         MainPhase phase = (MainPhase) o;
         return controller == phase.controller;
     }
+
+    @Override
+    public String getName() {
+        return "Main Phase";
+    }
 }

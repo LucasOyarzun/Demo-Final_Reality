@@ -119,4 +119,14 @@ public class Enemy extends AbstractCharacter {
   public boolean isEnemy() {
     return true;
   }
+
+  @Override
+  public IWeapon getEquippedWeapon() {
+    return null;
+  }
+
+  @Override
+  public String getClassName() {
+    return "Enemy";
+  }
 }
