@@ -17,35 +17,36 @@ public interface IPlayerCharacter extends ICharacter {
     /**
      * Equips a weapon to the character.
      */
-    void equip(IWeapon weapon);
+    void equip(IWeapon weapon) throws InvalidEquipException;
 
     /**
      * A method to try to equip an Axe.
      * @param axe
      */
-    void equipAxe(Axe axe);
+    void equipAxe(Axe axe) throws InvalidEquipException;
 
     /**
      * A method to try to equip a Bow.
      * @param bow
      */
-    void equipBow(Bow bow);
+    void equipBow(Bow bow) throws InvalidEquipException;
 
     /**
      * A method to try to equip a Knife.
      * @param knife
      */
-    void equipKnife(Knife knife);
+    void equipKnife(Knife knife) throws InvalidEquipException;
 
     /**
      * A method to try to equip a Staff.
      * @param staff
      */
-    void equipStaff(Staff staff);
+    void equipStaff(Staff staff) throws InvalidEquipException;
 
     /**
      * A method to try to equip a Sword.
      * @param sword
      */
-    void equipSword(Sword sword);
+    void equipSword(Sword sword) throws InvalidEquipException;
+
 }

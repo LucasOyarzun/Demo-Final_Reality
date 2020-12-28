@@ -53,4 +53,9 @@ public class Knight extends AbstractPlayerCharacter {
     public void equipAxe(Axe axe) {
         this.equippedWeapon = axe;
     }
+
+    @Override
+    public String getClassName() {
+        return "Knight";
+    }
 }

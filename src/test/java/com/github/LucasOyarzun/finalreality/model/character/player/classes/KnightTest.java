@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
      * Test the waitTurn method in enemies.
      */
     @Test
-    void waitTurnTest() {
+    void waitTurnTest() throws InvalidEquipException {
         adelbert.equip(testAxe);
         checkWaitTurn(adelbert);
     }
@@ -41,7 +42,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor works properly.
      */
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidEquipException {
         checkConstruction(new Knight(KNIGHT_NAME,100,10, turns),
                 adelbert,
                 new Knight("Different name",100,10, turns),
@@ -59,10 +60,12 @@ class KnightTest extends AbstractPlayerCharacterTest {
      * Test the method equip whit Knight
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         assertNull(adelbert.getEquippedWeapon());
-        adelbert.equip(testStaff);
-        adelbert.equip(testBow);
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {adelbert.equip(testBow);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {adelbert.equip(testStaff);});
         assertNull(adelbert.getEquippedWeapon());
         assertEquals(0, adelbert.getWeight());
 
@@ -79,7 +82,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
      * Test the attack and equip methods in Enemy
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         adelbert.equip(testAxe);
         /*Attack until 0 lifePoints */
         assertTrue(goblin.isAlive());

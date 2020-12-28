@@ -1,6 +1,8 @@
 package com.github.LucasOyarzun.finalreality.model.weapon;
 
+import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 
 /**
  * This represents a weapon from the game.
@@ -30,5 +32,5 @@ public interface IWeapon {
      * Equip this weapon to a player character
      * @param character
      */
-    void beEquipedBy(IPlayerCharacter character);
+    void beEquipedBy(IPlayerCharacter character) throws InvalidEquipException;
 }

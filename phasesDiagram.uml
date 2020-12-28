@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.github.LucasOyarzun.finalreality.phases</OriginalElement>
+  <nodes>
+    <node x="0.0" y="280.0">com.github.LucasOyarzun.finalreality.phases.EndPhase</node>
+    <node x="238.0" y="0.0">com.github.LucasOyarzun.finalreality.phases.Phase</node>
+    <node x="0.0" y="632.0">com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException</node>
+    <node x="0.0" y="445.0">com.github.LucasOyarzun.finalreality.phases.phasesTest</node>
+    <node x="501.0" y="280.0">com.github.LucasOyarzun.finalreality.phases.SelectingAttackTargetPhase</node>
+    <node x="220.0" y="445.0">com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException</node>
+    <node x="238.0" y="280.0">com.github.LucasOyarzun.finalreality.phases.MainPhase</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.github.LucasOyarzun.finalreality.phases.SelectingAttackTargetPhase" target="com.github.LucasOyarzun.finalreality.phases.Phase">
+      <point x="0.0" y="-60.0" />
+      <point x="629.0" y="255.0" />
+      <point x="440.5" y="255.0" />
+      <point x="81.0" y="115.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.phases.MainPhase" target="com.github.LucasOyarzun.finalreality.phases.Phase">
+      <point x="0.0" y="-60.0" />
+      <point x="0.0" y="115.0" />
+    </edge>
+    <edge source="com.github.LucasOyarzun.finalreality.phases.EndPhase" target="com.github.LucasOyarzun.finalreality.phases.Phase">
+      <point x="0.0" y="-60.0" />
+      <point x="109.0" y="255.0" />
+      <point x="278.5" y="255.0" />
+      <point x="-81.0" y="115.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="264.0" y="214.5" />
+  <SelectedNodes>
+    <node>com.github.LucasOyarzun.finalreality.phases.MainPhase</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
      * Test the waitTurn method in enemies.
      */
     @Test
-    void waitTurnTest() {
+    void waitTurnTest() throws InvalidEquipException {
         vivi.equip(testStaff);
         checkWaitTurn(vivi);
     }
@@ -40,7 +41,7 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor works properly.
      */
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidEquipException {
         checkConstruction(new BlackMage(BLACK_MAGE_NAME,100,10,100, turns),
                 vivi,
                 new BlackMage("Different name",100,10,100, turns),
@@ -58,11 +59,14 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
      * Test the method equip whit Black Mage
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         assertNull(vivi.getEquippedWeapon());
-        vivi.equip(testSword);
-        vivi.equip(testBow);
-        vivi.equip(testAxe);
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {vivi.equip(testSword);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {vivi.equip(testBow);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {vivi.equip(testAxe);});
         assertNull(vivi.getEquippedWeapon());
         assertEquals(0, vivi.getWeight());
 
@@ -77,7 +81,7 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
      * Test the attack and equip methods in Enemy
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         vivi.equip(testStaff);
         /*Attack until 0 lifePoints */
         assertTrue(goblin.isAlive());

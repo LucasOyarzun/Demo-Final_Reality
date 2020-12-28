@@ -44,4 +44,9 @@ public class WhiteMage extends AbstractPlayerCharacter {
     public void equipStaff(Staff staff) {
         this.equippedWeapon = staff;
     }
+
+    @Override
+    public String getClassName() {
+        return "White Mage";
+    }
 }

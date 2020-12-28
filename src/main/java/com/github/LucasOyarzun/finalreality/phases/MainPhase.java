@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.phases;
 
 import com.github.LucasOyarzun.finalreality.controller.GameController;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 
 public class MainPhase extends Phase {
@@ -19,7 +20,7 @@ public class MainPhase extends Phase {
         changePhase(new SelectingAttackTargetPhase(controller));
     }
     @Override
-    public void changeWeapon(IWeapon weapon) {
+    public void changeWeapon(IWeapon weapon) throws InvalidEquipException {
         controller.changeWeapon(weapon);
     }
 
@@ -33,5 +34,10 @@ public class MainPhase extends Phase {
         }
         MainPhase phase = (MainPhase) o;
         return controller == phase.controller;
+    }
+
+    @Override
+    public String getName() {
+        return "Main Phase";
     }
 }

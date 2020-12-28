@@ -48,4 +48,9 @@ public class Engineer extends AbstractPlayerCharacter {
     public void equipBow(Bow bow) {
         this.equippedWeapon = bow;
     }
+
+    @Override
+    public String getClassName() {
+        return "Engineer";
+    }
 }

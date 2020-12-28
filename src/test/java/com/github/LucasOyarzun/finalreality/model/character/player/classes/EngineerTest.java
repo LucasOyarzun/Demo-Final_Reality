@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
      * Test the waitTurn method in enemies.
      */
     @Test
-    void waitTurnTest() {
+    void waitTurnTest() throws InvalidEquipException {
         cid.equip(testAxe);
         checkWaitTurn(cid);
     }
@@ -40,7 +41,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor works properly.
      */
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidEquipException {
         checkConstruction(new Engineer(ENGINEER_NAME,100,10, turns),
                 cid,
                 new Engineer("Different name",100,10, turns),
@@ -58,11 +59,14 @@ class EngineerTest extends AbstractPlayerCharacterTest {
      * Test the method equip whit Engineer
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         assertNull(cid.getEquippedWeapon());
-        cid.equip(testStaff);
-        cid.equip(testKnife);
-        cid.equip(testSword);
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {cid.equip(testSword);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {cid.equip(testStaff);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {cid.equip(testKnife);});
         assertEquals(0, cid.getWeight());
 
         assertNull(cid.getEquippedWeapon());
@@ -77,7 +81,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
      * Test the attack and equip methods in Enemy
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         cid.equip(testAxe);
         /*Attack until 0 lifePoints */
         assertTrue(goblin.isAlive());

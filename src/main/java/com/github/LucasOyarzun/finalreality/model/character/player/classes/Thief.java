@@ -53,4 +53,9 @@ public class Thief extends AbstractPlayerCharacter {
     public void equipBow(Bow bow) {
         this.equippedWeapon = bow;
     }
+
+    @Override
+    public String getClassName() {
+        return "Thief";
+    }
 }

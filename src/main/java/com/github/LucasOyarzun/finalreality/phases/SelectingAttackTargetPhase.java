@@ -42,4 +42,9 @@ public class SelectingAttackTargetPhase extends Phase {
         SelectingAttackTargetPhase phase = (SelectingAttackTargetPhase) o;
         return controller == phase.controller;
     }
+
+    @Override
+    public String getName() {
+        return "Selecting attack target";
+    }
 }

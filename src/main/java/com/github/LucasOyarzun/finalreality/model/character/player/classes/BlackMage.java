@@ -50,4 +50,9 @@ public class BlackMage extends AbstractPlayerCharacter {
     public void equipKnife(Knife knife) {
         this.equippedWeapon = knife;
     }
+
+    @Override
+    public String getClassName() {
+        return "Black Mage";
+    }
 }
