@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      * Test the waitTurn method in enemies.
      */
     @Test
-    void waitTurnTest() {
+    void waitTurnTest() throws InvalidEquipException {
         eiko.equip(testStaff);
         checkWaitTurn(eiko);
     }
@@ -43,7 +44,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor works properly.
      */
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidEquipException {
         checkConstruction(new WhiteMage(WHITE_MAGE_NAME,100,10,100, turns),
                 eiko,
                 new WhiteMage("Different name",100,10,100, turns),
@@ -61,12 +62,16 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      * Test the method equip whit Thief
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         assertNull(eiko.getEquippedWeapon());
-        eiko.equip(testAxe);
-        eiko.equip(testKnife);
-        eiko.equip(testBow);
-        eiko.equip(testSword);
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {eiko.equip(testBow);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {eiko.equip(testAxe);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {eiko.equip(testKnife);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {eiko.equip(testSword);});
         assertNull(eiko.getEquippedWeapon());
         assertEquals(0, eiko.getWeight());
 
@@ -79,7 +84,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      * Test the attack and equip methods of WhiteMage
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         eiko.equip(testStaff);
         /*Attack until 0 lifePoints */
         assertTrue(goblin.isAlive());

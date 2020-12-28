@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.character.player.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.AbstractPlayerCharacterTest;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ class ThiefTest extends AbstractPlayerCharacterTest {
      * Test the waitTurn method in enemies.
      */
     @Test
-    void waitTurnTest() {
+    void waitTurnTest() throws InvalidEquipException {
         zidane.equip(testSword);
         checkWaitTurn(zidane);
     }
@@ -40,7 +41,7 @@ class ThiefTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor works properly.
      */
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidEquipException {
         checkConstruction(new Thief(THIEF_NAME,100,10, turns),
                 zidane,
                 new Thief("Different name",100,10, turns),
@@ -60,10 +61,12 @@ class ThiefTest extends AbstractPlayerCharacterTest {
      * Test the method equip whit Thief
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         assertNull(zidane.getEquippedWeapon());
-        zidane.equip(testAxe);
-        zidane.equip(testKnife);
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {zidane.equip(testAxe);});
+        assertThrows(com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException.class,
+                () -> {zidane.equip(testKnife);});
         assertNull(zidane.getEquippedWeapon());
         assertEquals(0 , zidane.getWeight());
 
@@ -80,7 +83,7 @@ class ThiefTest extends AbstractPlayerCharacterTest {
      * Test the attack and equip methods in Enemy
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         zidane.equip(testSword);
         /*Attack until 0 lifePoints */
         assertTrue(goblin.isAlive());

@@ -1,9 +1,7 @@
 package com.github.LucasOyarzun.finalreality.controller;
 
-import com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException;
-import com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException;
-import com.github.LucasOyarzun.finalreality.phases.Phase;
-import com.github.LucasOyarzun.finalreality.phases.MainPhase;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
+import com.github.LucasOyarzun.finalreality.phases.*;
 import com.github.LucasOyarzun.finalreality.model.Computer;
 import com.github.LucasOyarzun.finalreality.model.IPlayer;
 import com.github.LucasOyarzun.finalreality.model.Player;
@@ -12,6 +10,8 @@ import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharac
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -24,6 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GameController {
     private final Player player;
     private final Computer com;
+    private String lastAttack;
     private Phase actualPhase;
     private ICharacter actualCharacter;
     protected BlockingQueue<ICharacter> turns;
@@ -37,8 +38,9 @@ public class GameController {
     public GameController() {
         setPhase(new MainPhase(this));
         turns = new LinkedBlockingQueue<>();
-        player = new Player("Player",this, turns);
-        com = new Computer("COM",this, turns);
+        player = new Player("Player", this, turns);
+        com = new Computer("COM", this, turns);
+        lastAttack = "";
         player.addListener(enemyDeathHandler);
         com.addListener(playerCharacterDeathHandler);
     }
@@ -47,8 +49,8 @@ public class GameController {
      * Start a game, adding characters to turns queue.
      */
     public void startGame() {
-        for (int i = 0; i < getPlayerCharactersList().size()-1; i++) {
-            getPlayerCharactersList().get(i+1).waitTurn(); // Doesn't add the first character.
+        for (int i = 0; i < getPlayerCharactersList().size() - 1; i++) {
+            getPlayerCharactersList().get(i + 1).waitTurn(); // Doesn't add the first character.
         }
         for (int i = 0; i < getEnemiesList().size(); i++) {
             getEnemiesList().get(i).waitTurn();
@@ -118,6 +120,7 @@ public class GameController {
 
     /**
      * Ask character's name if character is in the PlayerCharacter or Enemy List
+     *
      * @param character
      */
     public String askCharacterName(ICharacter character) {
@@ -309,19 +312,20 @@ public class GameController {
      * @param weapon    Weapon added.
      * @param character Character that will equip the weapon.
      */
-    public void equipWeapontoCharacter(IWeapon weapon, IPlayerCharacter character) {
+    public void equipWeapontoCharacter(IWeapon weapon, IPlayerCharacter character) throws InvalidEquipException {
         player.equipWeapon(weapon, character);
     }
 
     /**
      * Change the actualcharacter's weapon.
      */
-    public void changeWeapon(IWeapon weapon) {
+    public void changeWeapon(IWeapon weapon) throws InvalidEquipException {
         actualCharacter.beOrderedToEquipBy(this, weapon);
     }
 
     /**
      * Remove a dead character from the list of characters.
+     *
      * @param deadCharacter character who died.
      */
     public void onCharacterDeath(IPlayerCharacter deadCharacter) {
@@ -334,8 +338,10 @@ public class GameController {
             System.out.println("GAME OVER You Lose.");
         }
     }
+
     /**
      * Remove a dead enemy from the list of characters
+     *
      * @param deadEnemy Enemy who died.
      */
     public void onEnemyDeath(Enemy deadEnemy) {
@@ -351,6 +357,7 @@ public class GameController {
 
     /**
      * Print a message when a character ends his/her turn.
+     *
      * @param message message printed.
      */
     public void characterEndsTurn(String message) {
@@ -359,6 +366,7 @@ public class GameController {
 
     /**
      * Print a message when a character is ready to battle.
+     *
      * @param character character Ready.
      */
     public void characterIsWaiting(ICharacter character) {
@@ -367,6 +375,7 @@ public class GameController {
 
     /**
      * Set the actualPhase
+     *
      * @param phase Game's phase selected
      */
     public void setPhase(Phase phase) {
@@ -384,26 +393,21 @@ public class GameController {
 
     /**
      * Try to change the actualCharacter's weapon
+     *
      * @param weapon
      */
-    public void trytoChangeWeapon(IWeapon weapon) {
-        try {
-            actualPhase.changeWeapon(weapon);
-        } catch (InvalidDecisionException e) {
-            System.out.println(e.toString());
-        }
+    public void trytoChangeWeapon(IWeapon weapon) throws InvalidEquipException, InvalidDecisionException {
+        actualPhase.changeWeapon(weapon);
     }
 
     /**
      * Try to attack a Character with the actualCharacter
+     *
      * @param character character attacked
      */
-    public void tryToAttack(ICharacter character) {
-        try {
-            actualPhase.attack(character);
-        } catch (InvalidDecisionException e) {
-            System.out.println(e.toString());
-        }
+    public void tryToAttack(ICharacter character) throws InvalidDecisionException {
+        actualPhase.attack(character);
+        tryToPick();
     }
 
     /**
@@ -412,75 +416,129 @@ public class GameController {
     public void tryToPick() {
         try {
             actualPhase.pickCharacterFromQueue();
-        } catch (InvalidTransitionException | InvalidDecisionException e) {
-            System.out.println(e.toString());
+            if (actualCharacter.getLifePoints()<=0) {
+                setPhase(new EndPhase(this));
+                Thread.sleep(500);
+                tryToPick();
+            }
+        } catch (InvalidDecisionException | InvalidTransitionException | InterruptedException ignored) {
+            System.out.println("Nobody is ready yet");
         }
+
     }
 
     /**
      * Try to change the actual Phase to SelectingAttackTargetPhase
      */
     public void tryToStartAttack() throws InvalidTransitionException {
-        try {
-            actualPhase.toSelectingAttackTargetPhase();
-        } catch (InvalidTransitionException e) {
-            System.out.println(e.toString());
-        }
+        actualPhase.toSelectingAttackTargetPhase();
     }
 
-
+    /**
+     * Return enemies list's size.
+     */
     public int getEnemiesListSize() {
         return getEnemiesList().size();
     }
 
+    /**
+     * Return an enemy from List.
+     * @param i position of the enemy in the enemies List.
+     */
     public ICharacter getEnemy(int i) {
         return com.getCharacters().get(i);
     }
 
+    /**
+     * Return enemy's name if it's an available enemy.
+     * @param i position of the enemy in the enemies List.
+     */
     public String getEnemyName(int i) {
         return com.getCharacters().get(i).getName();
     }
 
+    /**
+     * Return enemy's HP if it's an available enemy.
+     * @param i position of the enemy in the enemies List.
+     */
     public String getEnemyHP(int i) {
         return Integer.toString(com.getCharacters().get(i).getLifePoints());
     }
 
+    /**
+     * Return enemy's Attack Points if it's an available enemy.
+     * @param i position of the enemy in the enemies List.
+     */
     public String getEnemyAttack(int i) {
         return Integer.toString(com.getCharacters().get(i).getDamage());
     }
 
+    /**
+     * Return enemy's Defense Points if it's an available enemy.
+     * @param i position of the enemy in the enemies List.
+     */
     public String getEnemyDefense(int i) {
         return Integer.toString(com.getCharacters().get(i).getDefense());
     }
 
+    /**
+     * Return playerCharacter list's size.
+     */
     public int getPlayerListSize() {
         return getPlayerCharactersList().size();
     }
 
+    /**
+     * Return character's name if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterName(int i) {
         return player.getCharacters().get(i).getName();
     }
 
+    /**
+     * Return character's HP if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterHP(int i) {
         return Integer.toString(player.getCharacters().get(i).getLifePoints());
     }
 
+    /**
+     * Return character's Attack Points if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterAttack(int i) {
         return Integer.toString(player.getCharacters().get(i).getDamage());
     }
 
+    /**
+     * Return character's Defense Points if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterDefense(int i) {
         return Integer.toString(player.getCharacters().get(i).getDefense());
     }
 
+    /**
+     * Return character's weapon if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterWeaponName(int i) {
         return player.getCharacters().get(i).getEquippedWeapon().getName();
     }
 
+    /**
+     * Return character's class if it's an available character.
+     * @param i position of the character in character List.
+     */
     public String getPlayerCharacterClass(int i) {
         return player.getCharacters().get(i).getClassName();
     }
 
+    /**
+     * Return actualCharacter's name.
+     */
     public String getActualCharacterName() {
         if (getActualCharacter() == null) {
             return "";
@@ -489,23 +547,96 @@ public class GameController {
         }
     }
 
+    /**
+     * Return player inventory's size.
+     */
     public int getInventorySize() {
         return getPlayerInventory().size();
     }
 
+    /**
+     * Return weapon's name if it's an available weapon.
+     * @param i position of the weapon in the character List.
+     */
     public String getWeaponName(int i) {
         return getPlayerInventory().get(i).getName();
     }
 
+    /**
+     * Return weapon's Attack Points if it's an available weapon.
+     * @param i position of the weapon in the character List.
+     */
     public String getWeaponAttack(int i) {
         return Integer.toString(getPlayerInventory().get(i).getDamage());
     }
 
+    /**
+     * Return weapon's Weight if it's an available weapon.
+     * @param i position of the weapon in the character List.
+     */
     public String getWeaponWeight(int i) {
         return Integer.toString(getPlayerInventory().get(i).getWeight());
     }
 
+    /**
+     * Return actualPhase's name.
+     */
     public String getActualPhaseName() {
         return getActualPhase().getName();
+    }
+
+    /**
+     * Calculates the damage dealt by a Character to another
+     * @param attacker Character who attacks.
+     * @param attacked Character who is attacked.
+     * @return An String with the damage.
+     */
+    public String getDamageDealt(ICharacter attacker, ICharacter attacked) {
+        String lastLifePoints = Integer.toString(attacked.getLifePoints());
+        if ((attacker.getDamage() - attacked.getDefense()) >= attacked.getLifePoints()) {
+            return lastLifePoints + " HP. " + attacked.getName() + " died.";
+        } else {
+            return Integer.toString(attacker.getDamage() - attacked.getDefense()) + " HP. ";
+        }
+    }
+
+
+    /**
+     * Makes the enemyMove when it's an enemy's turn.
+     * @param text Text of the lastAction before this attack.
+     * @return A String thath announces the last attack.
+     */
+    public String makeEnemyMove(String text) {
+        Random randomNumber = new Random();
+        List<ICharacter> characterList = new ArrayList<>();
+        List<ICharacter> possibleCharacterList = player.getCharacters();
+        for (ICharacter characterTemp: possibleCharacterList) {
+            if (characterTemp.getLifePoints() >0) {
+                characterList.add(characterTemp);
+            }
+        }
+        ICharacter character = characterList.get(randomNumber.nextInt(characterList.size()));
+        ICharacter enemy = actualCharacter;
+        if(enemy.getLifePoints() > 0) {
+            try {
+                tryToStartAttack();
+                int lastLifePoints = character.getLifePoints();
+                tryToAttack(character);
+                if(character.getLifePoints() <= 0) {
+                    return enemy.getName() + " attacked " + character.getName() + " and did " +
+                            lastLifePoints + " HP.  " + character.getName() + " died.";
+                }
+                return enemy.getName() + " attacked " + character.getName() + " and did " +
+                        Integer.toString(enemy.getDamage() - character.getDefense()) + " HP.";
+            } catch (InvalidTransitionException e) {
+                System.out.println("Invalid transition Enemy attack");
+            } catch (InvalidDecisionException e) {
+                System.out.println("Invalid Decision Enemy attack");
+            }
+        } else {
+            setPhase(new EndPhase(this));
+        }
+
+        return text;
     }
 }

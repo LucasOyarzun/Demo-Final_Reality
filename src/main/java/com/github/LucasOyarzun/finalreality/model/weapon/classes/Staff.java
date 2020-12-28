@@ -1,6 +1,7 @@
 package com.github.LucasOyarzun.finalreality.model.weapon.classes;
 
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class Staff extends AbstractWeapon {
     }
 
     @Override
-    public void beEquipedBy(IPlayerCharacter character) {
+    public void beEquipedBy(IPlayerCharacter character) throws InvalidEquipException {
         character.equipStaff(this);
     }
 }

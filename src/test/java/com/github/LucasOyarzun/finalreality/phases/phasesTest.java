@@ -5,6 +5,7 @@ import com.github.LucasOyarzun.finalreality.model.Computer;
 import com.github.LucasOyarzun.finalreality.model.Player;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.character.player.classes.Engineer;
 import com.github.LucasOyarzun.finalreality.model.character.player.classes.Knight;
 import com.github.LucasOyarzun.finalreality.model.character.player.classes.Thief;
@@ -70,7 +71,7 @@ public class phasesTest {
         zidane = new Thief("Zidane", 100, 15, turns);
         cid = new Engineer("Cid", 130, 20, turns);
 
-        devil1 = new Enemy("Devil1", 60, 25, 15, 50, turns);
+        devil1 = new Enemy("Devil1", 60, 25, 8, 50, turns);
         devil2 = new Enemy("Devil2", 60, 25, 42, 40, turns);
         ent = new Enemy("Ent", 200, 40, 60, 52, turns);
         assassin = new Enemy("Assassin", 80, 200, 32, 80, turns);
@@ -112,7 +113,7 @@ public class phasesTest {
      * Checks that the changePhase's methods works properly
      */
     @Test
-    public void changePhaseTest() throws InvalidTransitionException, InterruptedException {
+    public void changePhaseTest() throws InvalidTransitionException, InterruptedException, InvalidEquipException, InvalidDecisionException {
         controller.addPlayerCharacter(adelbert);
         controller.addWeapon(testAxe);
         controller.addWeapon(testSword);
@@ -131,7 +132,8 @@ public class phasesTest {
         assertNotEquals(new SelectingAttackTargetPhase(controller), controller.getActualPhase());
 
         // Can't attack
-        controller.tryToAttack(devil1);
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException.class,
+                () -> {controller.tryToAttack(devil1);});
         assertEquals(60, devil1.getLifePoints());
 
         // Can't pick character from queue
@@ -151,7 +153,8 @@ public class phasesTest {
         assertNotEquals(new EndPhase(controller), controller.getActualPhase());
         assertNotEquals(new MainPhase(controller), controller.getActualPhase());
         // Can' change weapon
-        controller.trytoChangeWeapon(testAxe);
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException.class,
+                () -> {controller.trytoChangeWeapon(testAxe);});
         assertEquals(testSword, adelbert.getEquippedWeapon());
 
         // Can't pick character from queue
@@ -159,43 +162,46 @@ public class phasesTest {
         assertEquals(adelbert, controller.getActualCharacter());
 
         // Can´t change to SelectingAttackTargetPhase
-        controller.tryToStartAttack();
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException.class,
+                () -> {controller.tryToStartAttack();;});
+
         assertEquals(new SelectingAttackTargetPhase(controller), controller.getActualPhase());
 
         // Can attack
         controller.tryToAttack(devil1);
         assertEquals(35, devil1.getLifePoints());
         // End Phase
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
-        assertNotEquals(new MainPhase(controller), controller.getActualPhase());
+        assertEquals(new MainPhase(controller), controller.getActualPhase());
+        assertNotEquals(new EndPhase(controller), controller.getActualPhase());
         assertNotEquals(new SelectingAttackTargetPhase(controller), controller.getActualPhase());
-        assertNull(controller.getActualCharacter());
+        assertEquals(devil1, controller.getActualCharacter());
 
         //Can't attack
-        controller.tryToAttack(devil1);
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidDecisionException.class,
+                () -> {controller.tryToAttack(devil1);});
         assertEquals(35, devil1.getLifePoints());
 
         // Can' change weapon
         controller.trytoChangeWeapon(testAxe);
         assertEquals(testSword, adelbert.getEquippedWeapon());
 
-        // Can´t change to SelectingAttackTargetPhase
-        controller.tryToStartAttack();
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
-
+        // Must do an Enemy Move
+        controller.makeEnemyMove("This is an enemy move.");
         // Can pick character from queue ( Pick an enemy)
         Thread.sleep(1500);
         controller.tryToPick();
 
-        // Keep on End Phase until pick a PlayerCharacter
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
+        // Starts an Enemy Main Phase
+        assertNotEquals(new EndPhase(controller), controller.getActualPhase());
+        assertEquals(new MainPhase(controller), controller.getActualPhase());
 
+        controller.makeEnemyMove("This is an Enemy move.");
         // Can pick character from queue (Pick an enemy)
         Thread.sleep(1000);
         controller.tryToPick();
 
         // Keep on End Phase until pick a PlayerCharacter
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
+
 
         // Can pick character from queue (Pick an enemy)
         Thread.sleep(2000);
@@ -203,17 +209,24 @@ public class phasesTest {
 
         // Can pick character from queue (Pick a playerCharacter)
         controller.tryToPick();
-        assertEquals(adelbert, controller.getActualCharacter());
+        assertEquals(devil1, controller.getActualCharacter());
 
         //If picks a playerCharacter, change to MainPhase
         assertEquals(new MainPhase(controller), controller.getActualPhase());
+
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException.class,
+                () -> {controller.getActualPhase().toMainPhase();});
+
+        controller.setPhase(new EndPhase(controller));
+        assertThrows(com.github.LucasOyarzun.finalreality.phases.InvalidTransitionException.class,
+                () -> {controller.getActualPhase().toEndPhase();});
     }
 
     /**
      * Checks that the game works with phases as expected
      */
     @Test
-    public void fightTest() throws InvalidTransitionException, InterruptedException {
+    public void fightTest() throws InvalidTransitionException, InterruptedException, InvalidEquipException, InvalidDecisionException {
         controller.addPlayerCharacter(adelbert);
         controller.addWeapon(testAxe);
         controller.addWeapon(testSword);
@@ -230,14 +243,13 @@ public class phasesTest {
         controller.tryToStartAttack();
         controller.tryToAttack(devil1);
 
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
+        assertEquals(new MainPhase(controller), controller.getActualPhase());
         assertEquals(35, devil1.getLifePoints());
 
         // Second Turn (Enemy)
         Thread.sleep(2000);
         controller.tryToPick();
-
-        // Adelbert lost life
+        controller.makeEnemyMove("This is an enemy Move");
         assertEquals(180, adelbert.getLifePoints());
 
         // Third Turn (Player)
@@ -250,12 +262,13 @@ public class phasesTest {
         controller.tryToStartAttack();
         controller.tryToAttack(devil1);
 
-        assertEquals(new EndPhase(controller), controller.getActualPhase());
+        assertEquals(new MainPhase(controller), controller.getActualPhase());
         assertEquals(10, devil1.getLifePoints());
 
         // Fourth Turn (Enemy)
         Thread.sleep(2000);
         controller.tryToPick();
+        controller.makeEnemyMove("This is an enemy Move");
 
         // Adelbert lost life
         assertEquals(160, adelbert.getLifePoints());
@@ -275,5 +288,19 @@ public class phasesTest {
         assertEquals(0, devil1.getLifePoints());
         assertTrue(controller.getPlayer().askWin());
         assertFalse(controller.getCom().askWin());
+    }
+
+    @Test
+    /**
+     * Checks that the GetName() method works properly.
+     */
+    public void getNameTest() {
+        EndPhase endPhase = new EndPhase(controller);
+        MainPhase mainPhase = new MainPhase(controller);
+        SelectingAttackTargetPhase selectPhase = new SelectingAttackTargetPhase(controller);
+        assertEquals("End Phase", endPhase.getName());
+        assertEquals("Main Phase", mainPhase.getName());
+        assertEquals("Selecting attack target", selectPhase.getName());
+
     }
 }

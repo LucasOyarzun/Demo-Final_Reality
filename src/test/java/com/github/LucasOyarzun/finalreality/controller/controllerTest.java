@@ -5,6 +5,7 @@ import com.github.LucasOyarzun.finalreality.model.Player;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.character.player.classes.*;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.*;
@@ -33,6 +34,7 @@ public class controllerTest {
     private WhiteMage eiko;
     private Thief zidane;
     private Engineer cid;
+    private BlackMage black;
 
     private Enemy devil1;
     private Enemy devil2;
@@ -72,6 +74,7 @@ public class controllerTest {
         eiko = new WhiteMage("Eiko", 100, 10, 80, turns);
         zidane = new Thief("Zidane", 100, 15, turns);
         cid = new Engineer("Cid", 130, 20, turns);
+        black = new BlackMage("Black", 100, 20 ,100, turns);
 
         devil1 = new Enemy("Devil1", 60, 25, 32, 40, turns);
         devil2 = new Enemy("Devil2", 60, 25, 42, 40, turns);
@@ -105,7 +108,7 @@ public class controllerTest {
      * Checks that de askInformation methods works properly.
      */
     @Test
-    void characterInfoTest() {
+    void characterInfoTest() throws InvalidEquipException {
         assertEquals("", controller.askCharacterName(adelbert));
         assertEquals(-1, controller.askCharacterLifePoints(adelbert));
         assertEquals(-1, controller.askCharacterDamage(adelbert));
@@ -196,7 +199,7 @@ public class controllerTest {
      * Checks that the equipWeapons methods work properly.
      */
     @Test
-    void equipWeaponTest() {
+    void equipWeaponTest() throws InvalidEquipException {
         controller.addPlayerCharacter(eiko);
         controller.addPlayerCharacter(adelbert);
 
@@ -222,7 +225,7 @@ public class controllerTest {
      * Check that the changeWeapon method works properly.
      */
     @Test
-    void changeWeaponTest() throws InterruptedException {
+    void changeWeaponTest() throws InterruptedException, InvalidEquipException {
         controller.addPlayerCharacter(adelbert);
         controller.addPlayerCharacter(cid);
         controller.addWeapon(testAxe);
@@ -259,7 +262,7 @@ public class controllerTest {
      */
     /** Estaba pensado para otro tipo de fases, no las que se usaron al final*/
     @Test
-    void queueTest() throws InterruptedException {
+    void queueTest() throws InterruptedException, InvalidEquipException {
         System.out.println("////Queue Test");
         //Adding Characters, Enemies and Weapons
         controller.addPlayerCharacter(adelbert);
@@ -305,7 +308,7 @@ public class controllerTest {
      * Checks that the attack method works properly.
      */
     @Test
-    void attackTest() {
+    void attackTest() throws InvalidEquipException {
         System.out.println("////Attack Test");
         //Adding Characters, Enemies and Weapons
         controller.addPlayerCharacter(adelbert);
@@ -352,7 +355,7 @@ public class controllerTest {
      * Checks that player wins when Computer is out of enemies.
      */
     @Test
-    void winTest() {
+    void winTest() throws InvalidEquipException {
         System.out.println("////Win Test");
         controller.addPlayerCharacter(eiko);
         controller.addWeapon(testStaff);
@@ -376,7 +379,7 @@ public class controllerTest {
      * Checks that Player loses when Player is out of characters.
      */
     @Test
-    void loseTest() {
+    void loseTest() throws InvalidEquipException {
         System.out.println("////Lose Test");
         controller.addPlayerCharacter(eiko);
         controller.addWeapon(testStaff);
@@ -393,6 +396,69 @@ public class controllerTest {
         assertTrue(controller.getCom().askWin());
         assertFalse(controller.getPlayer().askWin());
         System.out.println("//////////////////////////");
+    }
+
+    /**
+     * Checks that getter methods works properly.
+     */
+    @Test
+    void getterTest() throws InvalidEquipException, InterruptedException {
+        controller.addPlayerCharacter(eiko);
+        controller.addPlayerCharacter(adelbert);
+        controller.addPlayerCharacter(zidane);
+        controller.addPlayerCharacter(cid);
+        controller.addPlayerCharacter(black);
+
+        controller.addWeapon(testStaff);
+        controller.addWeapon(testSword);
+        controller.addWeapon(testAxe);
+        controller.addWeapon(testKnife);
+        controller.addWeapon(testBow);
+        controller.addWeapon(testBow);
+
+        controller.equipWeapontoCharacter(testStaff, eiko);
+        controller.equipWeapontoCharacter(testSword, adelbert);
+        controller.equipWeapontoCharacter(testBow,zidane);
+        controller.equipWeapontoCharacter(testKnife, black);
+        controller.equipWeapontoCharacter(testAxe, cid);
+        controller.addEnemy(devil1);
+
+        assertEquals("", controller.getActualCharacterName());
+        controller.startGame();
+
+        Thread.sleep(2000);
+        assertEquals("Eiko", controller.getPlayerCharacterName(0));
+        assertEquals("50", controller.getPlayerCharacterAttack(0));
+        assertEquals("10", controller.getPlayerCharacterDefense(0));
+        assertEquals("100", controller.getPlayerCharacterHP(0));
+        assertEquals("White Mage", controller.getPlayerCharacterClass(0));
+        assertEquals("Knight", controller.getPlayerCharacterClass(1));
+        assertEquals("Thief", controller.getPlayerCharacterClass(2));
+        assertEquals("Engineer", controller.getPlayerCharacterClass(3));
+        assertEquals("Black Mage", controller.getPlayerCharacterClass(4));
+        assertFalse(adelbert.isEnemy());
+        assertFalse(cid.isEnemy());
+        assertEquals("Test Staff", controller.getPlayerCharacterWeaponName(0));
+
+
+        assertTrue(devil1.isEnemy());
+        assertEquals(devil1, controller.getEnemy(0));
+        assertNull(devil1.getEquippedWeapon());
+        assertEquals("Devil1", controller.getEnemyName(0));
+        assertEquals("60", controller.getEnemyHP(0));
+        assertEquals("40", controller.getEnemyAttack(0));
+        assertEquals("25", controller.getEnemyDefense(0));
+        assertEquals("Enemy", devil1.getClassName());
+
+        assertEquals("Main Phase", controller.getActualPhaseName());
+        assertEquals("Eiko", controller.getActualCharacterName());
+
+        assertEquals(1, controller.getInventorySize());
+        assertEquals("Test Bow", controller.getWeaponName(0));
+        assertEquals("50", controller.getWeaponAttack(0));
+        assertEquals("40", controller.getWeaponWeight(0));
+
+        assertEquals("25 HP. ", controller.getDamageDealt(adelbert, devil1));
     }
 
 }

@@ -5,6 +5,7 @@ import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.Enemy;
 import com.github.LucasOyarzun.finalreality.model.character.ICharacter;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 
 import java.beans.PropertyChangeSupport;
@@ -87,13 +88,17 @@ public class Player implements IPlayer{
      * @param weapon     weapon to equip.
      * @param character  character that will equip the weapon.
      */
-    public void equipWeapon(IWeapon weapon, IPlayerCharacter character) {
-        if (characters.contains(character) && inventory.contains(weapon)) {
+    public void equipWeapon(IWeapon weapon, IPlayerCharacter character) throws InvalidEquipException {
+        if (characters.contains(character) && inventory.contains(weapon) ) {
             if (character.getEquippedWeapon() != null) { //If the character has a weapon, add it again to the inventory
-                addWeapon(character.getEquippedWeapon());
+                IWeapon lastWeapon = character.getEquippedWeapon();
+                character.equip(weapon);
+                addWeapon(lastWeapon);
+                removeWeapon(weapon);
+            } else {
+                character.equip(weapon);
+                removeWeapon(weapon);
             }
-            character.equip(weapon);
-            removeWeapon(weapon);
         }
     }
 

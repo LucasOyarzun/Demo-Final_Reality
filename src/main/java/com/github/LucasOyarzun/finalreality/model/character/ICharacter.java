@@ -3,6 +3,7 @@ package com.github.LucasOyarzun.finalreality.model.character;
 import com.github.LucasOyarzun.finalreality.controller.GameController;
 import com.github.LucasOyarzun.finalreality.controller.IEventHandler;
 import com.github.LucasOyarzun.finalreality.model.character.player.IPlayerCharacter;
+import com.github.LucasOyarzun.finalreality.model.character.player.InvalidEquipException;
 import com.github.LucasOyarzun.finalreality.model.weapon.IWeapon;
 
 /**
@@ -99,7 +100,7 @@ public interface ICharacter {
    * If it's a PlayerCharacter, it will equip a weapon ordered by a controller.
    * @param gameController Controller who ordered.
    */
-  void beOrderedToEquipBy(GameController gameController, IWeapon weapon);
+  void beOrderedToEquipBy(GameController gameController, IWeapon weapon) throws InvalidEquipException;
 
   /**
    * Return true if this ICharacter is an Enemy.

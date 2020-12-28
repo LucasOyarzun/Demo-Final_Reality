@@ -53,3 +53,14 @@ Controller can equip a weapon to a PlayerCharacter and order a character to atta
 Besides, the controller knows when stars and finish a character's turn, and knows immediately if a character die and
 if the Player won or lost the battle.
 
+Finally were implementes Phases to the game battles, Main Phase (To check Allies, Enemies and change weapons), Attack Phase
+(To select who we will attack) and End Phase (To wait until the next character is ready to battle).
+
+To show the game, was created a "view" (for MVC pattern) with JavaFX, where the "view" will call controller's methods to show
+to the player every information he/she needs to play. Even it includes a scene of Game Over, with a message that depends on the
+game result. 
+
+To initialize the game, it's necessary to Run FinalReality.java, and a window will appear, the user can play using buttons on the 
+screen, with them, it's possible to change weapons, start Attack Phase and select an enemy to attack. If it's the turn of an enemy
+it will attack to a player character randomly. Every event on the game is announced by a Label on the left of the window.
+

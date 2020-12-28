@@ -22,16 +22,14 @@ public class EndPhase extends Phase {
     }
 
     @Override
-    public void pickCharacterFromQueue() throws InvalidDecisionException, InvalidTransitionException {
+    public void pickCharacterFromQueue() throws InvalidDecisionException, InvalidTransitionException, InterruptedException {
         super.pickCharacterFromQueue();
         if (controller.getActualCharacter()!=null) {
-            if(controller.getActualCharacter().isEnemy()) {
-                makeEnemyMove();
-            } else {
                 toMainPhase();
-            }
+        } else {
+            Thread.sleep(1000);
+            pickCharacterFromQueue();
         }
-
     }
 
     @Override
@@ -44,19 +42,6 @@ public class EndPhase extends Phase {
         }
         EndPhase phase = (EndPhase) o;
         return controller == phase.controller;
-    }
-
-    /**
-     * If the picked Character is an Enemy, the Enemy attacks ands Ends its turn.
-     * @throws InvalidTransitionException
-     */
-    private void makeEnemyMove() throws InvalidTransitionException {
-        Random randomNumber = new Random();
-        List<ICharacter> characterList = controller.getPlayer().getCharacters();
-        ICharacter character = characterList.get(randomNumber.nextInt(characterList.size()));
-        toMainPhase();
-        controller.tryToStartAttack();
-        controller.tryToAttack(character);
     }
 
     @Override

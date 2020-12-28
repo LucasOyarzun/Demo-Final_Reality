@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.github.LucasOyarzun.finalreality.model.weapon.classes.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.PropertyKey;
 
 /**
  * A class that holds all the information of a single character of the game.
@@ -84,28 +85,33 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     }
   }
   @Override
-  public void equip(IWeapon weapon) {
+  public void equip(IWeapon weapon) throws InvalidEquipException {
     weapon.beEquipedBy(this);
   }
 
   @Override
-  public void equipAxe(Axe axe) {
+  public void equipAxe(Axe axe) throws InvalidEquipException {
+    throw new InvalidEquipException("Can't Equip this weapon");
   }
 
   @Override
-  public void equipBow(Bow bow) {
+  public void equipBow(Bow bow) throws InvalidEquipException {
+    throw new InvalidEquipException("Can't Equip this weapon");
   }
 
   @Override
-  public void equipKnife(Knife knife) {
+  public void equipKnife(Knife knife) throws InvalidEquipException {
+    throw new InvalidEquipException("Can't Equip this weapon");
   }
 
   @Override
-  public void equipStaff(Staff staff) {
+  public void equipStaff(Staff staff) throws InvalidEquipException {
+    throw new InvalidEquipException("Can't Equip this weapon");
   }
 
   @Override
-  public void equipSword(Sword sword) {
+  public void equipSword(Sword sword) throws InvalidEquipException {
+    throw new InvalidEquipException("Can't Equip this weapon");
   }
 
   @Override
@@ -138,7 +144,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   @Override
-  public void beOrderedToEquipBy(GameController gameController, IWeapon weapon) {
+  public void beOrderedToEquipBy(GameController gameController, IWeapon weapon) throws InvalidEquipException {
     gameController.equipWeapontoCharacter(weapon, this);
   }
 
